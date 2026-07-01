@@ -75,7 +75,7 @@ export const CHAT_SCRIPT: { question: string; answer: string; earn: number }[] =
   },
   {
     question: "What almost made you stop using it in the first month?",
-    answer: "The app logged me out a lot and verification took two tries. I Nearly gave up .",
+    answer: "The app logged me out a lot and verification took two tries. I nearly gave up before it clicked.",
     earn: 300,
   },
   {
