@@ -36,7 +36,7 @@ export function CompaniesComparison() {
       </div>
 
       <div className="mt-10 overflow-x-auto">
-        <table className="w-full min-w-160 border-separate border-spacing-0 text-sm">
+        <table className="w-full min-w-[640px] border-separate border-spacing-0 text-sm">
           <thead>
             <tr>
               <th className="rounded-tl-xl border border-border bg-card p-3 text-left font-semibold text-foreground">
