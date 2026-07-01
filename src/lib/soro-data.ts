@@ -26,7 +26,7 @@ export const UNIVERSITY_TAGS = [
 ]
 
 const NAMES = [
-  "Chidinma O.",
+  "Theresa O.",
   "Tunde A.",
   "Amaka E.",
   "Ibrahim S.",
@@ -70,17 +70,17 @@ export function buildTickerItems(): TickerItem[] {
 export const CHAT_SCRIPT: { question: string; answer: string; earn: number }[] = [
   {
     question: "When you send money to a friend, which app do you reach for first — and why that one?",
-    answer: "OPay, honestly. Transfers land instantly and the fees are tiny compared to my bank app.",
+    answer: "OPay,Transfers land instantly and the fees are tiny compared to my bank app.",
     earn: 300,
   },
   {
     question: "What almost made you stop using it in the first month?",
-    answer: "The app logged me out a lot and verification took two tries. Nearly gave up before it clicked.",
+    answer: "The app logged me out a lot and verification took two tries. I Nearly gave up .",
     earn: 300,
   },
   {
-    question: "If a new wallet gave you ₦500 to try it, would you actually switch?",
-    answer: "Only if my friends were on it too. Sending money where nobody can receive it is pointless.",
+    question: "If a new bank app gave you free ₦500 to try it, would you actually switch?",
+    answer: "Only if my friends were on it too and the charges are low.",
     earn: 300,
   },
 ]

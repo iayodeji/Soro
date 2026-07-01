@@ -32,14 +32,14 @@ export function ChatDemo() {
         for (const step of CHAT_SCRIPT) {
           if (cancelled) return
           setTyping(true)
-          await wait(1400)
+          await wait(1600)
           if (cancelled) return
           setTyping(false)
           setBubbles((b) => [...b, { kind: "ai", text: step.question }])
-          await wait(1100)
+          await wait(1200)
           if (cancelled) return
           setBubbles((b) => [...b, { kind: "user", text: step.answer }])
-          await wait(700)
+          await wait(1000)
           if (cancelled) return
           setBubbles((b) => [...b, { kind: "earn", amount: step.earn }])
           setWallet((w) => w + step.earn)

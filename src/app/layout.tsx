@@ -18,7 +18,6 @@ export const metadata: Metadata = {
   title: "Sóró — Get paid to share what you think",
   description:
     "Sóró is a verified Nigerian university student research panel. Students get paid to answer questions through AI conversations, and brands get honest insights in 48 hours.",
-  generator: "v0.app",
 }
 
 export const viewport: Viewport = {
