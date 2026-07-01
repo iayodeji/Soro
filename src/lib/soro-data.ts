@@ -70,7 +70,7 @@ export function buildTickerItems(): TickerItem[] {
 export const CHAT_SCRIPT: { question: string; answer: string; earn: number }[] = [
   {
     question: "When you send money to a friend, which app do you reach for first — and why that one?",
-    answer: "OPay,Transfers land instantly and the fees are tiny compared to my bank app.",
+    answer: "OPay, honestly. Transfers land instantly and the fees are tiny compared to my bank app.",
     earn: 300,
   },
   {
