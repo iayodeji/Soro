@@ -45,22 +45,7 @@ export function WaitlistForm({ variant = "full" }: { variant?: Variant }) {
   const [loading, setLoading] = useState(false)
   const [submitError, setSubmitError] = useState("")
   const [done, setDone] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [step, setStep] = useState<"idle" | "enter-code">("idle")
   const [alreadyRegisteredAt, setAlreadyRegisteredAt] = useState<string | null>(null)
- 
-
-  // Called async, only after isValidEmail passes — actually sends & later confirms the OTP
-  async function handleSendCode(emailArg: string, uniArg: string) {
-    if (!isValidEmail(emailArg, uniArg)) {
-      setError("Please use your official university email address.")
-      return
-    }
-    const supabase = createClient()
-    const { error: otpError } = await supabase.auth.signInWithOtp({ email: emailArg })
-    if (otpError) setError(otpError.message)
-    else setStep("enter-code")
-  }
 
   function validate() {
     const next: Record<string, string> = {}
