@@ -21,7 +21,8 @@ yarn-error.log*
 
 # vercel
 .vercel
-
+# text
+*.txt 
 # typescript
 *.tsbuildinfo
 next-env.d.ts

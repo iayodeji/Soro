@@ -1,12 +1,39 @@
 "use client"
 
 import { useState } from "react"
+import InviteCTA from "./invite-cta"
 import { createClient } from "@/src/lib/supabase/client"
 import { UNIVERSITIES } from "@/src/lib/soro-data"
 
-function isValidEmail(email: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+// component-level state (defined inside the component below)
+
+const NIGERIAN_UNI_ROOT_DOMAINS: Record<string, string[]> = {
+  UI: ["ui.edu.ng"],
+  UNILAG: ["unilag.edu.ng"],
+  OAU: ["oauife.edu.ng"],
+  UNIBEN: ["uniben.edu", "uniben.edu.ng"],
+  ABU: ["abu.edu.ng"],
+  UNN: ["unn.edu.ng"],
+  LASU: ["lasu.edu.ng"],
+  Covenant: ["covenantuniversity.edu.ng"],
+  FUTA: ["futa.edu.ng"],
+  UNIPORT: ["uniport.edu.ng"],
 }
+
+function isValidEmail(email: string, uni: string): boolean {
+  const match = email.match(/^[^\s@]+@([^\s@]+)$/)
+  if (!match) return false
+  const domain = match[1].toLowerCase()
+
+  if (uni === "Other") return /\.edu\.ng$/i.test(domain)
+
+  const roots = NIGERIAN_UNI_ROOT_DOMAINS[uni]
+  if (!roots) return false
+  return roots.some((root) => domain === root || domain.endsWith(`.${root}`))
+}
+
+// Note: handleSendCode is implemented inside the component so it can access
+// component state (setError, setStep) and create a Supabase client.
 
 type Variant = "full" | "email"
 
@@ -18,6 +45,7 @@ export function WaitlistForm({ variant = "full" }: { variant?: Variant }) {
   const [loading, setLoading] = useState(false)
   const [submitError, setSubmitError] = useState("")
   const [done, setDone] = useState(false)
+  const [alreadyRegisteredAt, setAlreadyRegisteredAt] = useState<string | null>(null)
 
   function validate() {
     const next: Record<string, string> = {}
@@ -26,7 +54,7 @@ export function WaitlistForm({ variant = "full" }: { variant?: Variant }) {
     }
     if (!email.trim()) {
       next.email = "Email is required."
-    } else if (!isValidEmail(email)) {
+    } else if (!isValidEmail(email, university)) {
       next.email = "Enter a valid university email."
     }
     if (variant === "full" && !university) {
@@ -44,18 +72,87 @@ export function WaitlistForm({ variant = "full" }: { variant?: Variant }) {
     setLoading(true)
     try {
       const supabase = createClient()
-      const { error } = await supabase.from("waitlist_students").insert({
-        name: variant === "full" ? name.trim() : email.split("@")[0],
-        email: email.trim().toLowerCase(),
+      const normalizedEmail = email.trim().toLowerCase()
+      
+
+      // quick server-side existence check for better UX (single-row, privacy-preserving)
+      const { data: existing, error: queryError } = await supabase
+        .from("waitlist_students")
+        .select("id, created_at")
+        .eq("email", normalizedEmail)
+        .limit(1)
+        .maybeSingle()
+
+      if (queryError) {
+        setSubmitError("Could not verify existing registration. Please try again.")
+        setLoading(false)
+        return
+      }
+
+      if (existing) {
+        
+        // already registered — prefer showing their registration timestamp when available,
+        // otherwise fall back to the generic success UI so the user always gets feedback.
+        if (existing.created_at) {
+          setAlreadyRegisteredAt(existing.created_at)
+        } else {
+          setDone(true)
+        }
+        setLoading(false)
+        return
+      }
+
+      const { error: insertError } = await supabase.from("waitlist_students").insert({
+        name: variant === "full" ? name.trim() : normalizedEmail.split("@")[0],
+        email: normalizedEmail,
         university: variant === "full" ? university : "Unknown",
       })
-      if (error) throw error
-      setDone(true)
+
+      if (insertError) {
+        const msg = String(insertError.message || "")
+        // Treat unique-constraint violations and HTTP 409 as already-registered (race condition fallback)
+        const isDuplicate =
+          insertError.code === "23505" || insertError.status === 409 || /unique|duplicate|409/i.test(msg)
+        if (isDuplicate) {
+          // duplicate — show success UI
+          setDone(true)
+        } else {
+          throw insertError
+        }
+      } else {
+        setDone(true)
+      }
     } catch {
       setSubmitError("Something went wrong saving your spot. Please try again.")
     } finally {
       setLoading(false)
     }
+  }
+
+  if (alreadyRegisteredAt) {
+    const pretty = (() => {
+      try {
+        return new Date(alreadyRegisteredAt).toLocaleString()
+      } catch {
+        return alreadyRegisteredAt
+      }
+    })()
+
+    return (
+      <div className="soro-pop rounded-2xl border border-sage/30 bg-sage/10 p-6 text-center">
+        <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-amber-600 text-white">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+            <path d="M12 2v4" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M20 12h-4" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
+        <h3 className="font-heading text-xl font-bold text-foreground">You&apos;re already on the list</h3>
+        <p className="mt-1 text-sm text-muted-foreground">We received your request on {pretty}. Check your inbox for confirmation.</p>
+        <div className="mt-4">
+          <InviteCTA email={email} />
+        </div>
+      </div>
+    )
   }
 
   if (done) {
@@ -68,8 +165,11 @@ export function WaitlistForm({ variant = "full" }: { variant?: Variant }) {
         </div>
         <h3 className="font-heading text-xl font-bold text-foreground">You&apos;re on the list</h3>
         <p className="mt-1 text-sm text-muted-foreground">
-          We&apos;ll email you the moment a brief matches your profile. Keep an eye on your inbox.
+          We&apos;ll email you the moment we launch, keep an eye on your inbox.
         </p>
+        <div className="mt-4">
+          <InviteCTA email={email} />
+        </div>
       </div>
     )
   }
