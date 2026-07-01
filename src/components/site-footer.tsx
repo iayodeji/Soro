@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { SoroLogo } from "@/components/soro-logo"
+import { SoroLogo } from "@/src/components/soro-logo"
 
 type FooterProps = {
   crossLinkLabel: string

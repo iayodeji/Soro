@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { SoroLogo } from "@/components/soro-logo"
+import { SoroLogo } from "@/src/components/soro-logo"
 
 type NavProps = {
   /** label for the cross-link to the other audience */

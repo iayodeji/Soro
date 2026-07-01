@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { CHAT_SCRIPT } from "@/lib/soro-data"
+import { CHAT_SCRIPT } from "@/src/lib/soro-data"
 
 type Bubble =
   | { kind: "ai"; text: string }

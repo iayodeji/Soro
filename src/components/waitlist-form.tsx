@@ -1,8 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { createClient } from "@/lib/supabase/client"
-import { UNIVERSITIES } from "@/lib/soro-data"
+import { createClient } from "@/src/lib/supabase/client"
+import { UNIVERSITIES } from "@/src/lib/soro-data"
 
 function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)

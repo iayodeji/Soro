@@ -1,9 +1,9 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { SiteNav } from "@/components/site-nav"
-import { SiteFooter } from "@/components/site-footer"
-import { BriefForm } from "@/components/brief-form"
-import { UNIVERSITY_TAGS } from "@/lib/soro-data"
+import { SiteNav } from "@/src/components/site-nav"
+import { SiteFooter } from "@/src/components/site-footer"
+import { BriefForm } from "@/src/components/brief-form"
+import { UNIVERSITY_TAGS } from "@/src/lib/soro-data"
 
 export const metadata: Metadata = {
   title: "Sóró for companies — Verified African youth insight in 48 hours",

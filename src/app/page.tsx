@@ -1,9 +1,9 @@
 import Link from "next/link"
-import { SiteNav } from "@/components/site-nav"
-import { SiteFooter } from "@/components/site-footer"
-import { ActivityTicker } from "@/components/activity-ticker"
-import { ChatDemo } from "@/components/chat-demo"
-import { WaitlistForm } from "@/components/waitlist-form"
+import { SiteNav } from "@/src/components/site-nav"
+import { SiteFooter } from "@/src/components/site-footer"
+import { ActivityTicker } from "@/src/components/activity-ticker"
+import { ChatDemo } from "@/src/components/chat-demo"
+import { WaitlistForm } from "@/src/components/waitlist-form"
 
 const STEPS = [
   {

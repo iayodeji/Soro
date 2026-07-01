@@ -1,7 +1,7 @@
 "use client"
 
 import { useMemo } from "react"
-import { buildTickerItems } from "@/lib/soro-data"
+import { buildTickerItems } from "@/src/lib/soro-data"
 
 export function ActivityTicker() {
   const items = useMemo(() => buildTickerItems(), [])
