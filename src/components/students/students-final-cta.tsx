@@ -3,7 +3,7 @@ import { WaitlistForm } from "@/src/components/waitlist-form"
 
 export function StudentsFinalCta() {
   return (
-    <section className="bg-foreground py-16 sm:py-20">
+    <section id="waitlist-bottom" className="bg-foreground py-16 sm:py-20 scroll-mt-24">
       <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
         <h2 className="text-balance font-heading text-3xl font-bold text-background sm:text-4xl">
           Your opinion is worth money. Start earning.
@@ -12,7 +12,7 @@ export function StudentsFinalCta() {
           Drop your university email and we&apos;ll save your spot. Brands are already lining up their first briefs.
         </p>
         <div className="mx-auto mt-7 max-w-md rounded-2xl bg-background/95 p-4 text-left">
-          <WaitlistForm variant="email" />
+          <WaitlistForm variant="full" />
         </div>
         <p className="mt-5 text-sm text-background/70">
           Building a brand instead?{" "}

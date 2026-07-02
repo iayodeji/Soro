@@ -4,10 +4,12 @@ import { SoroLogo } from "@/src/components/soro-logo"
 type FooterProps = {
   crossLinkLabel: string
   crossLinkHref: string
+  ctaLabel?: string
+  ctaHref?: string
   contactEmail?: string
 }
 
-export function SiteFooter({ crossLinkLabel, crossLinkHref, contactEmail }: FooterProps) {
+export function SiteFooter({ crossLinkLabel, crossLinkHref, ctaLabel, ctaHref, contactEmail }: FooterProps) {
   return (
     <footer className="border-t border-border bg-card">
       <div className="mx-auto flex max-w-6xl flex-col items-start gap-6 px-4 py-10 sm:px-6 md:flex-row md:items-center md:justify-between">
@@ -18,6 +20,14 @@ export function SiteFooter({ crossLinkLabel, crossLinkHref, contactEmail }: Foot
           </p>
         </div>
         <div className="flex flex-col gap-3 text-sm sm:flex-row sm:items-center sm:gap-6">
+          {ctaLabel && ctaHref ? (
+            <Link
+              href={ctaHref}
+              className="inline-flex items-center justify-center rounded-full bg-terracotta px-4 py-2 font-semibold text-terracotta-foreground transition-colors hover:bg-terracotta/90"
+            >
+              {ctaLabel}
+            </Link>
+          ) : null}
           <Link href={crossLinkHref} className="font-medium text-foreground transition-colors hover:text-terracotta">
             {crossLinkLabel}
           </Link>

@@ -1,0 +1,658 @@
+[
+    {
+        "name": "Abia State University, Uturu",
+        "state": "Abia"
+    },
+    {
+        "name": "Clifford University, Owerrinta",
+        "state": "Abia"
+    },
+    {
+        "name": "Gregory University, Uturu",
+        "state": "Abia"
+    },
+    {
+        "name": "Michael Okpara University of Agriculture, Umudike",
+        "state": "Abia"
+    },
+    {
+        "name": "Adamawa State University, Mubi",
+        "state": "Adamawa"
+    },
+    {
+        "name": "American University of Nigeria, Yola",
+        "state": "Adamawa"
+    },
+    {
+        "name": "Modibbo Adama University, Yola",
+        "state": "Adamawa"
+    },
+    {
+        "name": "Akwa Ibom State University, Ikot Akpaden",
+        "state": "Akwa Ibom"
+    },
+    {
+        "name": "Obong University, Obong Ntak",
+        "state": "Akwa Ibom"
+    },
+    {
+        "name": "Ritman University, Ikot Ekpene",
+        "state": "Akwa Ibom"
+    },
+    {
+        "name": "Topfaith University, Mkpatak",
+        "state": "Akwa Ibom"
+    },
+    {
+        "name": "University of Uyo",
+        "state": "Akwa Ibom"
+    },
+    {
+        "name": "Chukwuemeka Odumegwu Ojukwu University, Uli",
+        "state": "Anambra"
+    },
+    {
+        "name": "Legacy University, Okija",
+        "state": "Anambra"
+    },
+    {
+        "name": "Madonna University, Okija",
+        "state": "Anambra"
+    },
+    {
+        "name": "Nnamdi Azikiwe University, Awka",
+        "state": "Anambra"
+    },
+    {
+        "name": "Paul University, Awka",
+        "state": "Anambra"
+    },
+    {
+        "name": "Tansian University, Umunya",
+        "state": "Anambra"
+    },
+    {
+        "name": "Abubakar Tafawa Balewa University, Bauchi",
+        "state": "Bauchi"
+    },
+    {
+        "name": "Bauchi State University, Gadau",
+        "state": "Bauchi"
+    },
+    {
+        "name": "Bayelsa Medical University, Yenagoa",
+        "state": "Bayelsa"
+    },
+    {
+        "name": "Federal University, Otuoke",
+        "state": "Bayelsa"
+    },
+    {
+        "name": "Niger Delta University, Wilberforce Island",
+        "state": "Bayelsa"
+    },
+    {
+        "name": "University of Africa, Toru-Orua",
+        "state": "Bayelsa"
+    },
+    {
+        "name": "Benue State University, Makurdi",
+        "state": "Benue"
+    },
+    {
+        "name": "Federal University of Agriculture, Makurdi",
+        "state": "Benue"
+    },
+    {
+        "name": "University of Mkar, Mkar",
+        "state": "Benue"
+    },
+    {
+        "name": "Borno State University, Maiduguri",
+        "state": "Borno"
+    },
+    {
+        "name": "University of Maiduguri",
+        "state": "Borno"
+    },
+    {
+        "name": "Arthur Jarvis University, Akpabuyo",
+        "state": "Cross River"
+    },
+    {
+        "name": "Cross River State University of Technology, Calabar",
+        "state": "Cross River"
+    },
+    {
+        "name": "University of Calabar",
+        "state": "Cross River"
+    },
+    {
+        "name": "Admiralty University of Nigeria, Ibusa",
+        "state": "Delta"
+    },
+    {
+        "name": "Delta State University of Science and Technology, Ozoro",
+        "state": "Delta"
+    },
+    {
+        "name": "Delta State University, Abraka",
+        "state": "Delta"
+    },
+    {
+        "name": "Dennis Osadebay University, Asaba",
+        "state": "Delta"
+    },
+    {
+        "name": "Edwin Clark University, Kiagbodo",
+        "state": "Delta"
+    },
+    {
+        "name": "Federal University of Petroleum Resources, Effurun",
+        "state": "Delta"
+    },
+    {
+        "name": "Novena University, Ogume",
+        "state": "Delta"
+    },
+    {
+        "name": "University of Delta, Agbor",
+        "state": "Delta"
+    },
+    {
+        "name": "Western Delta University, Oghara",
+        "state": "Delta"
+    },
+    {
+        "name": "Alex Ekwueme Federal University, Ndufu-Alike",
+        "state": "Ebonyi"
+    },
+    {
+        "name": "Ebonyi State University, Abakaliki",
+        "state": "Ebonyi"
+    },
+    {
+        "name": "Evangel University, Akaeze",
+        "state": "Ebonyi"
+    },
+    {
+        "name": "King David Umar Umahi Federal University of Health Sciences, Uburu",
+        "state": "Ebonyi"
+    },
+    {
+        "name": "Ambrose Alli University, Ekpoma",
+        "state": "Edo"
+    },
+    {
+        "name": "Benson Idahosa University, Benin City",
+        "state": "Edo"
+    },
+    {
+        "name": "Edo State University, Uzairue",
+        "state": "Edo"
+    },
+    {
+        "name": "Igbinedion University, Okada",
+        "state": "Edo"
+    },
+    {
+        "name": "Samuel Adegboyega University, Ogwa",
+        "state": "Edo"
+    },
+    {
+        "name": "University of Benin",
+        "state": "Edo"
+    },
+    {
+        "name": "Wellspring University, Evbuobanosa",
+        "state": "Edo"
+    },
+    {
+        "name": "Afe Babalola University, Ado-Ekiti",
+        "state": "Ekiti"
+    },
+    {
+        "name": "Ekiti State University, Ado-Ekiti",
+        "state": "Ekiti"
+    },
+    {
+        "name": "Federal University, Oye-Ekiti",
+        "state": "Ekiti"
+    },
+    {
+        "name": "Caritas University, Amorji-Nike",
+        "state": "Enugu"
+    },
+    {
+        "name": "Coal City University, Enugu",
+        "state": "Enugu"
+    },
+    {
+        "name": "Enugu State University of Science and Technology, Enugu",
+        "state": "Enugu"
+    },
+    {
+        "name": "Godfrey Okoye University, Ugwuomu-Nike",
+        "state": "Enugu"
+    },
+    {
+        "name": "University of Nigeria, Nsukka",
+        "state": "Enugu"
+    },
+    {
+        "name": "African University of Science and Technology, Abuja",
+        "state": "FCT"
+    },
+    {
+        "name": "Baze University, Abuja",
+        "state": "FCT"
+    },
+    {
+        "name": "Nile University of Nigeria, Abuja",
+        "state": "FCT"
+    },
+    {
+        "name": "University of Abuja, Gwagwalada",
+        "state": "FCT"
+    },
+    {
+        "name": "Veritas University, Abuja",
+        "state": "FCT"
+    },
+    {
+        "name": "Federal University, Kashere",
+        "state": "Gombe"
+    },
+    {
+        "name": "Gombe State University, Gombe",
+        "state": "Gombe"
+    },
+    {
+        "name": "Federal University of Technology, Owerri",
+        "state": "Imo"
+    },
+    {
+        "name": "Hezekiah University, Ishimayeduru",
+        "state": "Imo"
+    },
+    {
+        "name": "Imo State University, Owerri",
+        "state": "Imo"
+    },
+    {
+        "name": "K.O. Mbadiwe University, Ogboko",
+        "state": "Imo"
+    },
+    {
+        "name": "Maranatha University, Mgbidi",
+        "state": "Imo"
+    },
+    {
+        "name": "Federal University, Dutse",
+        "state": "Jigawa"
+    },
+    {
+        "name": "Sule Lamido University, Kafin Hausa",
+        "state": "Jigawa"
+    },
+    {
+        "name": "Ahmadu Bello University, Zaria",
+        "state": "Kaduna"
+    },
+    {
+        "name": "Air Force Institute of Technology, Kaduna",
+        "state": "Kaduna"
+    },
+    {
+        "name": "Greenfield University, Kaduna",
+        "state": "Kaduna"
+    },
+    {
+        "name": "Kaduna State University, Kaduna",
+        "state": "Kaduna"
+    },
+    {
+        "name": "Bayero University, Kano",
+        "state": "Kano"
+    },
+    {
+        "name": "Kano University of Science and Technology, Wudil",
+        "state": "Kano"
+    },
+    {
+        "name": "Skyline University Nigeria, Kano",
+        "state": "Kano"
+    },
+    {
+        "name": "Yusuf Maitama Sule University, Kano",
+        "state": "Kano"
+    },
+    {
+        "name": "Al-Qalam University, Katsina",
+        "state": "Katsina"
+    },
+    {
+        "name": "Federal University, Dutsin-Ma",
+        "state": "Katsina"
+    },
+    {
+        "name": "Umaru Musa Yar'Adua University, Katsina",
+        "state": "Katsina"
+    },
+    {
+        "name": "Federal University, Birnin Kebbi",
+        "state": "Kebbi"
+    },
+    {
+        "name": "Kebbi State University of Science and Technology, Aliero",
+        "state": "Kebbi"
+    },
+    {
+        "name": "Confluence University of Science and Technology, Osara",
+        "state": "Kogi"
+    },
+    {
+        "name": "Federal University, Lokoja",
+        "state": "Kogi"
+    },
+    {
+        "name": "Kogi State University, Anyigba",
+        "state": "Kogi"
+    },
+    {
+        "name": "Salem University, Lokoja",
+        "state": "Kogi"
+    },
+    {
+        "name": "Al-Hikmah University, Ilorin",
+        "state": "Kwara"
+    },
+    {
+        "name": "Kwara State University, Malete",
+        "state": "Kwara"
+    },
+    {
+        "name": "Landmark University, Omu-Aran",
+        "state": "Kwara"
+    },
+    {
+        "name": "Summit University, Offa",
+        "state": "Kwara"
+    },
+    {
+        "name": "Thomas Adewumi University, Oko-Irese",
+        "state": "Kwara"
+    },
+    {
+        "name": "University of Ilorin",
+        "state": "Kwara"
+    },
+    {
+        "name": "Anchor University, Ayobo",
+        "state": "Lagos"
+    },
+    {
+        "name": "Augustine University, Ilara",
+        "state": "Lagos"
+    },
+    {
+        "name": "Caleb University, Imota",
+        "state": "Lagos"
+    },
+    {
+        "name": "Eko University of Medical and Health Sciences, Ijanikin",
+        "state": "Lagos"
+    },
+    {
+        "name": "Lagos State University of Education, Oto-Ijanikin",
+        "state": "Lagos"
+    },
+    {
+        "name": "Lagos State University of Science and Technology, Ikorodu",
+        "state": "Lagos"
+    },
+    {
+        "name": "Lagos State University, Ojo",
+        "state": "Lagos"
+    },
+    {
+        "name": "Pan-Atlantic University, Lekki",
+        "state": "Lagos"
+    },
+    {
+        "name": "University of Lagos",
+        "state": "Lagos"
+    },
+    {
+        "name": "Bingham University, Karu",
+        "state": "Nasarawa"
+    },
+    {
+        "name": "Federal University, Lafia",
+        "state": "Nasarawa"
+    },
+    {
+        "name": "Nasarawa State University, Keffi",
+        "state": "Nasarawa"
+    },
+    {
+        "name": "Edusoko University, Bida",
+        "state": "Niger"
+    },
+    {
+        "name": "Federal University of Technology, Minna",
+        "state": "Niger"
+    },
+    {
+        "name": "Newgate University, Minna",
+        "state": "Niger"
+    },
+    {
+        "name": "Niger State University of Education, Minna",
+        "state": "Niger"
+    },
+    {
+        "name": "Babcock University, Ilishan-Remo",
+        "state": "Ogun"
+    },
+    {
+        "name": "Bells University of Technology, Ota",
+        "state": "Ogun"
+    },
+    {
+        "name": "Chrisland University, Abeokuta",
+        "state": "Ogun"
+    },
+    {
+        "name": "Covenant University, Ota",
+        "state": "Ogun"
+    },
+    {
+        "name": "Crawford University, Igbesa",
+        "state": "Ogun"
+    },
+    {
+        "name": "Federal University of Agriculture, Abeokuta",
+        "state": "Ogun"
+    },
+    {
+        "name": "McPherson University, Seriki Sotayo",
+        "state": "Ogun"
+    },
+    {
+        "name": "Moshood Abiola University of Science and Technology, Abeokuta",
+        "state": "Ogun"
+    },
+    {
+        "name": "Mountain Top University, Makogi Oba",
+        "state": "Ogun"
+    },
+    {
+        "name": "Olabisi Onabanjo University, Ago-Iwoye",
+        "state": "Ogun"
+    },
+    {
+        "name": "Redeemer's University, Ede",
+        "state": "Ogun"
+    },
+    {
+        "name": "Tai Solarin University of Education, Ijagun",
+        "state": "Ogun"
+    },
+    {
+        "name": "Achievers University, Owo",
+        "state": "Ondo"
+    },
+    {
+        "name": "Adekunle Ajasin University, Akungba-Akoko",
+        "state": "Ondo"
+    },
+    {
+        "name": "Elizade University, Ilara-Mokin",
+        "state": "Ondo"
+    },
+    {
+        "name": "Federal University of Technology, Akure",
+        "state": "Ondo"
+    },
+    {
+        "name": "Ondo State University of Medical Sciences, Ondo",
+        "state": "Ondo"
+    },
+    {
+        "name": "Wesley University, Ondo",
+        "state": "Ondo"
+    },
+    {
+        "name": "Adeleke University, Ede",
+        "state": "Osun"
+    },
+    {
+        "name": "Bowen University, Iwo",
+        "state": "Osun"
+    },
+    {
+        "name": "Fountain University, Osogbo",
+        "state": "Osun"
+    },
+    {
+        "name": "Kings University, Ode-Omu",
+        "state": "Osun"
+    },
+    {
+        "name": "Obafemi Awolowo University, Ile-Ife",
+        "state": "Osun"
+    },
+    {
+        "name": "Oduduwa University, Ipetumodu",
+        "state": "Osun"
+    },
+    {
+        "name": "Osun State University, Osogbo",
+        "state": "Osun"
+    },
+    {
+        "name": "Redeemer's University, Ede",
+        "state": "Osun"
+    },
+    {
+        "name": "Ajayi Crowther University, Oyo",
+        "state": "Oyo"
+    },
+    {
+        "name": "Dominican University, Ibadan",
+        "state": "Oyo"
+    },
+    {
+        "name": "First Technical University, Ibadan",
+        "state": "Oyo"
+    },
+    {
+        "name": "Ladoke Akintola University of Technology, Ogbomoso",
+        "state": "Oyo"
+    },
+    {
+        "name": "Lead City University, Ibadan",
+        "state": "Oyo"
+    },
+    {
+        "name": "Precious Cornerstone University, Ibadan",
+        "state": "Oyo"
+    },
+    {
+        "name": "University of Ibadan",
+        "state": "Oyo"
+    },
+    {
+        "name": "ANAN University, Kwall",
+        "state": "Plateau"
+    },
+    {
+        "name": "Karl Kumm University, Vom",
+        "state": "Plateau"
+    },
+    {
+        "name": "Plateau State University, Bokkos",
+        "state": "Plateau"
+    },
+    {
+        "name": "University of Jos",
+        "state": "Plateau"
+    },
+    {
+        "name": "Ignatius Ajuru University of Education, Rumuolumeni",
+        "state": "Rivers"
+    },
+    {
+        "name": "Madonna University, Elele",
+        "state": "Rivers"
+    },
+    {
+        "name": "PAMO University of Medical Sciences, Port Harcourt",
+        "state": "Rivers"
+    },
+    {
+        "name": "Rivers State University, Port Harcourt",
+        "state": "Rivers"
+    },
+    {
+        "name": "University of Port Harcourt",
+        "state": "Rivers"
+    },
+    {
+        "name": "Sokoto State University, Sokoto",
+        "state": "Sokoto"
+    },
+    {
+        "name": "Usmanu Danfodiyo University, Sokoto",
+        "state": "Sokoto"
+    },
+    {
+        "name": "Federal University, Wukari",
+        "state": "Taraba"
+    },
+    {
+        "name": "Kwararafa University, Wukari",
+        "state": "Taraba"
+    },
+    {
+        "name": "Taraba State University, Jalingo",
+        "state": "Taraba"
+    },
+    {
+        "name": "Federal University, Gashua",
+        "state": "Yobe"
+    },
+    {
+        "name": "Yobe State University, Damaturu",
+        "state": "Yobe"
+    },
+    {
+        "name": "Federal University, Gusau",
+        "state": "Zamfara"
+    },
+    {
+        "name": "Zamfara State University, Talata Mafara",
+        "state": "Zamfara"
+    }
+]

@@ -19,7 +19,12 @@ export default function StudentsPage() {
       <StudentsTrust />
       <StudentsFinalCta />
 
-      <SiteFooter crossLinkLabel="For companies" crossLinkHref="/companies" />
+      <SiteFooter
+        crossLinkLabel="For companies"
+        crossLinkHref="/companies"
+        ctaLabel="Join waitlist"
+        ctaHref="#waitlist-bottom"
+      />
     </main>
   )
 }

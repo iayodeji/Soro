@@ -3,33 +3,16 @@
 import { useState } from "react"
 import InviteCTA from "./invite-cta"
 import { createClient } from "@/src/lib/supabase/client"
-import { UNIVERSITIES } from "@/src/lib/soro-data"
+import { UNIVERSITY_STATE_GROUPS, UNIVERSITIES } from "@/src/lib/soro-data"
 
 // component-level state (defined inside the component below)
 
-const NIGERIAN_UNI_ROOT_DOMAINS: Record<string, string[]> = {
-  UI: ["ui.edu.ng"],
-  UNILAG: ["unilag.edu.ng"],
-  OAU: ["oauife.edu.ng"],
-  UNIBEN: ["uniben.edu", "uniben.edu.ng"],
-  ABU: ["abu.edu.ng"],
-  UNN: ["unn.edu.ng"],
-  LASU: ["lasu.edu.ng"],
-  Covenant: ["covenantuniversity.edu.ng"],
-  FUTA: ["futa.edu.ng"],
-  UNIPORT: ["uniport.edu.ng"],
-}
-
-function isValidEmail(email: string, uni: string): boolean {
+function isValidEmail(email: string): boolean {
   const match = email.match(/^[^\s@]+@([^\s@]+)$/)
   if (!match) return false
   const domain = match[1].toLowerCase()
 
-  if (uni === "Other") return /\.edu\.ng$/i.test(domain)
-
-  const roots = NIGERIAN_UNI_ROOT_DOMAINS[uni]
-  if (!roots) return false
-  return roots.some((root) => domain === root || domain.endsWith(`.${root}`))
+  return /\.edu(\.ng)?$/i.test(domain)
 }
 
 // Note: handleSendCode is implemented inside the component so it can access
@@ -54,7 +37,7 @@ export function WaitlistForm({ variant = "full" }: { variant?: Variant }) {
     }
     if (!email.trim()) {
       next.email = "Email is required."
-    } else if (!isValidEmail(email, university)) {
+    } else if (!isValidEmail(email)) {
       next.email = "Enter a valid university email."
     }
     if (variant === "full" && !university) {
@@ -245,11 +228,22 @@ export function WaitlistForm({ variant = "full" }: { variant?: Variant }) {
             aria-invalid={!!errors.university}
           >
             <option value="">Select your university</option>
-            {UNIVERSITIES.map((u) => (
-              <option key={u.value} value={u.value} className="text-foreground">
-                {u.label}
-              </option>
+            {UNIVERSITY_STATE_GROUPS.map((group) => (
+              <optgroup key={group.state} label={group.state}>
+                {group.universities.map((u) => (
+                  <option key={u.value} value={u.value} className="text-foreground">
+                    {u.label}
+                  </option>
+                ))}
+              </optgroup>
             ))}
+            <optgroup label="Other">
+              {UNIVERSITIES.filter((universityOption) => universityOption.value === "Other").map((u) => (
+                <option key={u.value} value={u.value} className="text-foreground">
+                  {u.label}
+                </option>
+              ))}
+            </optgroup>
           </select>
           {errors.university ? (
             <p className="mt-1 text-xs font-medium text-terracotta">{errors.university}</p>
