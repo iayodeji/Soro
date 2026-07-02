@@ -2,11 +2,10 @@
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [v0](https://v0.app).
 
-## Built with v0
+## Brand Reference
 
-This repository is linked to a [v0](https://v0.app) project. You can continue developing by visiting the link below -- start new chats to make changes, and v0 will push commits directly to this repo. Every merge to `main` will automatically deploy.
+Use [BRAND_GUIDE.md](BRAND_GUIDE.md) as the source of truth for all new UI, copy, motion, and illustration decisions. It captures the current Sóró positioning, palette, typography direction, and voice rules.
 
-[Continue working on v0 →](https://v0.app/chat/projects/prj_UFaTggmJzTg1vAa9xi34I0osWlrn)
 
 ## Getting Started
 

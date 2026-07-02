@@ -1,8 +1,7 @@
 import { UNIVERSITY_TAGS } from "@/src/lib/soro-data"
 
 const STATS = [
-  { value: "500+", label: "students on waitlist" },
-  { value: "10+", label: "universities covered" },
+  { value: "10+", label: "universities represented" },
   { value: "100%", label: "university-verified" },
 ]
 
@@ -18,7 +17,7 @@ export function CompaniesPanel() {
               We screen for fraud continuously and pay in cash, so people show up with real, considered answers — not
               point-farming noise.
             </p>
-            <div className="mt-7 grid grid-cols-3 gap-4">
+            <div className="mt-7 grid grid-cols-2 gap-4">
               {STATS.map((s) => (
                 <div key={s.label} className="rounded-2xl border border-border bg-background p-4 text-center">
                   <p className="font-heading text-2xl font-extrabold text-terracotta sm:text-3xl">{s.value}</p>
