@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { ChatDemo } from "@/src/components/chat-demo"
 import { WaitlistForm } from "@/src/components/waitlist-form"
 
@@ -17,6 +18,21 @@ export function StudentsHero() {
             Sóró pays Nigerian university students to answer brand questions through a quick AI conversation — not
             another boring survey form. Real talk, real naira.
           </p>
+
+          <div className="mt-7 flex flex-wrap items-center gap-3">
+            <Link
+              href="/companies"
+              className="inline-flex items-center justify-center rounded-full bg-terracotta px-5 py-3 text-sm font-semibold text-terracotta-foreground transition-colors hover:bg-terracotta/90"
+            >
+              For companies
+            </Link>
+            <a
+              href="#waitlist"
+              className="text-sm font-medium text-foreground underline-offset-4 transition-colors hover:underline"
+            >
+              I&apos;m a student
+            </a>
+          </div>
 
           <div
             id="waitlist"
