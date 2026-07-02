@@ -1,16 +1,44 @@
+import nigerianUniversities from "../../nigerian_universities.json"
+
+type UniversityRecord = {
+  name: string
+  state: string
+}
+
+const uniqueUniversities = (nigerianUniversities as UniversityRecord[]).filter(
+  (university, index, allUniversities) =>
+    allUniversities.findIndex((candidate) => candidate.name === university.name) === index,
+)
+
+const sortedUniversities = [...uniqueUniversities].sort((left, right) => {
+  if (left.state === right.state) {
+    return left.name.localeCompare(right.name)
+  }
+
+  return left.state.localeCompare(right.state)
+})
+
 export const UNIVERSITIES = [
-  { value: "UI", label: "University of Ibadan (UI)" },
-  { value: "UNILAG", label: "University of Lagos (UNILAG)" },
-  { value: "OAU", label: "Obafemi Awolowo University (OAU)" },
-  { value: "UNIBEN", label: "University of Benin (UNIBEN)" },
-  { value: "ABU", label: "Ahmadu Bello University (ABU)" },
-  { value: "UNN", label: "University of Nigeria, Nsukka (UNN)" },
-  { value: "LASU", label: "Lagos State University (LASU)" },
-  { value: "Covenant", label: "Covenant University" },
-  { value: "FUTA", label: "Federal University of Technology, Akure (FUTA)" },
-  { value: "UNIPORT", label: "University of Port Harcourt (UNIPORT)" },
+  ...uniqueUniversities.map((university) => ({ value: university.name, label: university.name })),
   { value: "Other", label: "Other" },
 ]
+
+export const UNIVERSITY_STATE_GROUPS = sortedUniversities.reduce<
+  { state: string; universities: { value: string; label: string }[] }[]
+>((groups, university) => {
+  const currentGroup = groups[groups.length - 1]
+
+  if (!currentGroup || currentGroup.state !== university.state) {
+    groups.push({
+      state: university.state,
+      universities: [{ value: university.name, label: university.name }],
+    })
+    return groups
+  }
+
+  currentGroup.universities.push({ value: university.name, label: university.name })
+  return groups
+}, [])
 
 export const UNIVERSITY_TAGS = [
   "UI",

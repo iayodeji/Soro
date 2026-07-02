@@ -8,7 +8,7 @@ export default function InviteCTA({ email }: { email?: string }) {
   async function handleInvite() {
     const configured = process.env.NEXT_PUBLIC_APP_URL ?? ''
     const origin = configured || (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000')
-    const inviteUrl = `${origin}/`
+    const inviteUrl = new URL('#waitlist', origin).toString()
 
     try {
       setInviteState('sharing')

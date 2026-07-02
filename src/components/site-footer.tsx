@@ -4,12 +4,12 @@ import { SoroLogo } from "@/src/components/soro-logo"
 type FooterProps = {
   crossLinkLabel: string
   crossLinkHref: string
-  primaryCtaLabel?: string
-  primaryCtaHref?: string
+  ctaLabel?: string
+  ctaHref?: string
   contactEmail?: string
 }
 
-export function SiteFooter({ crossLinkLabel, crossLinkHref, primaryCtaLabel, primaryCtaHref, contactEmail }: FooterProps) {
+export function SiteFooter({ crossLinkLabel, crossLinkHref, ctaLabel, ctaHref, contactEmail }: FooterProps) {
   return (
     <footer className="border-t border-border bg-card">
       <div className="mx-auto flex max-w-6xl flex-col items-start gap-6 px-4 py-10 sm:px-6 md:flex-row md:items-center md:justify-between">

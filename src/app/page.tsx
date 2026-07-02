@@ -28,7 +28,7 @@ export default function StudentsPage() {
         primaryCtaLabel="For companies"
         primaryCtaHref="/companies"
         crossLinkLabel="Join waitlist"
-        crossLinkHref="/#waitlist"
+        crossLinkHref="/#waitlist-bottom"
       />
     </main>
   )
