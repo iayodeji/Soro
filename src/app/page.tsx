@@ -10,7 +10,12 @@ import { StudentsFinalCta } from "@/src/components/students/students-final-cta"
 export default function StudentsPage() {
   return (
     <main className="min-h-screen bg-background">
-      <SiteNav crossLinkLabel="For companies" crossLinkHref="/companies" ctaLabel="Join waitlist" ctaTargetId="waitlist" />
+      <SiteNav
+        crossLinkLabel="Join waitlist"
+        crossLinkHref="/#waitlist"
+        ctaLabel="For companies"
+        ctaHref="/companies"
+      />
       <StudentsHero />
 
       <ActivityTicker />
@@ -20,10 +25,10 @@ export default function StudentsPage() {
       <StudentsFinalCta />
 
       <SiteFooter
-        crossLinkLabel="For companies"
-        crossLinkHref="/companies"
-        ctaLabel="Join waitlist"
-        ctaHref="#waitlist-bottom"
+        primaryCtaLabel="For companies"
+        primaryCtaHref="/companies"
+        crossLinkLabel="Join waitlist"
+        crossLinkHref="/#waitlist-bottom"
       />
     </main>
   )

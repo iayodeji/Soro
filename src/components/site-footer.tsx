@@ -20,12 +20,12 @@ export function SiteFooter({ crossLinkLabel, crossLinkHref, ctaLabel, ctaHref, c
           </p>
         </div>
         <div className="flex flex-col gap-3 text-sm sm:flex-row sm:items-center sm:gap-6">
-          {ctaLabel && ctaHref ? (
+          {primaryCtaLabel && primaryCtaHref ? (
             <Link
-              href={ctaHref}
+              href={primaryCtaHref}
               className="inline-flex items-center justify-center rounded-full bg-terracotta px-4 py-2 font-semibold text-terracotta-foreground transition-colors hover:bg-terracotta/90"
             >
-              {ctaLabel}
+              {primaryCtaLabel}
             </Link>
           ) : null}
           <Link href={crossLinkHref} className="font-medium text-foreground transition-colors hover:text-terracotta">

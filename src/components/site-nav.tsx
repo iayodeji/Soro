@@ -9,11 +9,16 @@ type NavProps = {
   crossLinkHref: string
   /** label + target id for the primary CTA that smooth-scrolls */
   ctaLabel: string
-  ctaTargetId: string
+  ctaTargetId?: string
+  /** optional route for the primary CTA when it should navigate instead of scroll */
+  ctaHref?: string
 }
 
-export function SiteNav({ crossLinkLabel, crossLinkHref, ctaLabel, ctaTargetId }: NavProps) {
+export function SiteNav({ crossLinkLabel, crossLinkHref, ctaLabel, ctaTargetId, ctaHref }: NavProps) {
   function handleCta(e: React.MouseEvent) {
+    if (ctaHref) return
+    if (!ctaTargetId) return
+
     e.preventDefault()
     const el = document.getElementById(ctaTargetId)
     el?.scrollIntoView({ behavior: "smooth", block: "start" })
@@ -30,13 +35,22 @@ export function SiteNav({ crossLinkLabel, crossLinkHref, ctaLabel, ctaTargetId }
           >
             {crossLinkLabel}
           </Link>
-          <a
-            href={`#${ctaTargetId}`}
-            onClick={handleCta}
-            className="rounded-full bg-terracotta px-4 py-2 text-sm font-semibold text-terracotta-foreground transition-colors hover:bg-terracotta/90 sm:px-5"
-          >
-            {ctaLabel}
-          </a>
+          {ctaHref ? (
+            <Link
+              href={ctaHref}
+              className="rounded-full bg-terracotta px-4 py-2 text-sm font-semibold text-terracotta-foreground transition-colors hover:bg-terracotta/90 sm:px-5"
+            >
+              {ctaLabel}
+            </Link>
+          ) : (
+            <a
+              href={ctaTargetId ? `#${ctaTargetId}` : crossLinkHref}
+              onClick={handleCta}
+              className="rounded-full bg-terracotta px-4 py-2 text-sm font-semibold text-terracotta-foreground transition-colors hover:bg-terracotta/90 sm:px-5"
+            >
+              {ctaLabel}
+            </a>
+          )}
         </div>
       </nav>
     </header>
