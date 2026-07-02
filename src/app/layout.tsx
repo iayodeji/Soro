@@ -2,6 +2,7 @@ import { Analytics } from "@vercel/analytics/next"
 import type { Metadata, Viewport } from "next"
 import { Playfair_Display, Inter } from "next/font/google"
 import "./globals.css"
+import { PostHogProvider } from "./posthog"
 
 const playfair = Playfair_Display({
   variable: "--font-heading",
@@ -32,8 +33,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${playfair.variable} ${inter.variable} bg-background`}>
       <body className="font-sans antialiased">
-        {children}
-        {process.env.NODE_ENV === "production" && <Analytics />}
+        <PostHogProvider>
+          {children}
+          {process.env.NODE_ENV === "production" && <Analytics />}
+        </PostHogProvider>
       </body>
     </html>
   )
