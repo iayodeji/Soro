@@ -12,7 +12,7 @@ const STEPS = [
   {
     n: "03",
     title: "Earn and cash out",
-    body: "Make ₦500+ per question. Withdraw to OPay, PalmPay, or your bank once you hit the ₦1,000 minimum.",
+    body: "Make ₦500-1000 per survey. Withdraw to OPay, PalmPay, or your bank once you hit the ₦1,000 minimum.",
   },
 ]
 
