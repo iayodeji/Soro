@@ -154,4 +154,35 @@
 
 .soro-float {
   animation: soro-float-up 0.4s ease-out both;
+}/* Sóró Reward Card Physics */
+@keyframes cardInertialPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.6) translateY(60px) rotateX(-20deg);
+  }
+  70% {
+    transform: scale(1.04) translateY(-4px) rotateX(2deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0) rotateX(0deg);
+  }
+}
+
+@keyframes scaleInCheck {
+  0% {
+    transform: scale(0) rotate(-45deg);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

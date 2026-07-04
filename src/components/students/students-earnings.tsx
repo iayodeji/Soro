@@ -1,8 +1,7 @@
 const RATES = [
-  { label: "Per question", value: "₦200+", valueClass: "text-terracotta" },
-  { label: "Full interview", value: "₦1,000", valueClass: "text-ochre" },
+  { label: "per interview", value: "₦500-1,000", valueClass: "text-ochre" },
   { label: "Premium studies", value: "₦5,000", valueClass: "text-sage" },
-  { label: "Cashout minimum", value: "₦1,000", valueClass: "text-terracotta" },
+  { label: "Cashout minimum", value: "₦500", valueClass: "text-terracotta" },
 ]
 
 const METHODS = ["OPay", "PalmPay", "Bank Transfer"]

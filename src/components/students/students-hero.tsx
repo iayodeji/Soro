@@ -49,7 +49,7 @@ export function StudentsHero() {
               <span className="h-7 w-7 rounded-full border-2 border-background bg-foreground" />
             </div>
             <p className="text-sm text-muted-foreground">
-              <span className="font-semibold text-foreground">500+ students</span> already on the waitlist
+              <span className="font-semibold text-foreground"> students</span> already on the waitlist
             </p>
           </div>
         </div>

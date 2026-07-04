@@ -17,8 +17,6 @@ export default function StudentsPage() {
         ctaHref="/companies"
       />
       <StudentsHero />
-
-      <ActivityTicker />
       <StudentsHowItWorks />
       <StudentsEarnings />
       <StudentsTrust />
