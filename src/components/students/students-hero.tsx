@@ -1,16 +1,41 @@
 "use client"
 
 import Link from "next/link"
-import { motion, type Variants } from "framer-motion"
+import { useState, useEffect } from "react"
+import { motion, AnimatePresence, type Variants } from "framer-motion"
 import { ChatDemo } from "@/src/components/chat-demo"
 import { WaitlistForm } from "@/src/components/waitlist-form"
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as const
 
+// The punchy ecosystem lines you want to flash or rotate
+const ECOSYSTEM_HOOKS = [
+  "Get paid to share what you actually think.",
+  "Your voice shapes brands. Your wallet gets paid.",
+  "Top brands don’t guess. They ask sóró."
+]
+
 export function StudentsHero() {
+  const [hookIndex, setHookIndex] = useState(0)
+
+  // Cycle through hooks every 4.5 seconds for a slow, premium pace
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setHookIndex((prev) => (prev + 1) % ECOSYSTEM_HOOKS.length)
+    }, 4500)
+    return () => clearInterval(timer)
+  }, [])
+
   const FADE_UP_ANIMATION_VARIANTS: Variants = {
     hidden: { opacity: 0, y: 12 },
     show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: EASE_OUT_EXPO } },
+  }
+
+  // The premium text transition - crisp, snappy, no typing cliches
+  const TEXT_FLIP_VARIANTS: Variants = {
+    enter: { opacity: 0, y: 20, filter: "blur(4px)" },
+    center: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.6, ease: EASE_OUT_EXPO } },
+    exit: { opacity: 0, y: -20, filter: "blur(4px)", transition: { duration: 0.4, ease: [0.7, 0, 0.84, 0] } }
   }
 
   return (
@@ -40,12 +65,23 @@ export function StudentsHero() {
             </div>
             Now onboarding verified Nigerian students
           </motion.span>
-          <motion.h1
-            variants={FADE_UP_ANIMATION_VARIANTS}
-            className="mt-5 text-balance font-heading text-4xl font-bold leading-[1.05] text-foreground sm:text-5xl lg:text-6xl"
-          >
-            Get paid to share what you actually think.
-          </motion.h1>
+
+          {/* Mask container to keep the text transitions tightly clipped within the layout */}
+          <div className="relative mt-5 h-[120px] sm:h-[160px] lg:h-[200px] overflow-hidden w-full">
+            <AnimatePresence mode="wait">
+              <motion.h1
+                key={hookIndex}
+                variants={TEXT_FLIP_VARIANTS}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                className="absolute inset-x-0 top-0 text-balance font-heading text-4xl font-bold leading-[1.05] text-foreground sm:text-5xl lg:text-6xl"
+              >
+                {ECOSYSTEM_HOOKS[hookIndex]}
+              </motion.h1>
+            </AnimatePresence>
+          </div>
+
           <motion.p
             variants={FADE_UP_ANIMATION_VARIANTS}
             className="mt-5 max-w-md text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg"
