@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { motion } from "framer-motion"
 import InviteCTA from "./invite-cta"
 import { createClient } from "@/src/lib/supabase/client"
 import { UNIVERSITY_STATE_GROUPS, UNIVERSITIES } from "@/src/lib/soro-data"
@@ -122,7 +123,11 @@ export function WaitlistForm({ variant = "full" }: { variant?: Variant }) {
     })()
 
     return (
-      <div className="soro-pop rounded-2xl border border-sage/30 bg-sage/10 p-6 text-center">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="rounded-2xl border border-sage/30 bg-sage/10 p-6 text-center"
+      >
         <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-amber-600 text-white">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
             <path d="M12 2v4" strokeLinecap="round" strokeLinejoin="round" />
@@ -134,13 +139,17 @@ export function WaitlistForm({ variant = "full" }: { variant?: Variant }) {
         <div className="mt-4">
           <InviteCTA email={email} />
         </div>
-      </div>
+      </motion.div>
     )
   }
 
   if (done) {
     return (
-      <div className="soro-pop rounded-2xl border border-sage/30 bg-sage/10 p-6 text-center">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="rounded-2xl border border-sage/30 bg-sage/10 p-6 text-center"
+      >
         <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-sage text-sage-foreground">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
             <path d="M20 6 9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
@@ -153,12 +162,12 @@ export function WaitlistForm({ variant = "full" }: { variant?: Variant }) {
         <div className="mt-4">
           <InviteCTA email={email} />
         </div>
-      </div>
+      </motion.div>
     )
   }
 
   const inputBase =
-    "w-full rounded-lg border bg-background px-4 py-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-terracotta focus:ring-2 focus:ring-terracotta/20"
+    "w-full rounded-lg border bg-background/50 px-4 py-3 text-sm text-foreground outline-none transition-all placeholder:text-muted-foreground focus:border-terracotta/50 focus:ring-4 focus:ring-terracotta/10"
 
   return (
     <form onSubmit={handleSubmit} noValidate className="space-y-4">

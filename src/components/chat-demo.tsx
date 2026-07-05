@@ -88,7 +88,15 @@ export function ChatDemo() {
             S
           </span>
           <div className="leading-tight">
-            <p className="text-sm font-semibold text-foreground">Sóró Interview</p>
+            <div className="flex items-center gap-1.5">
+              <p className="text-sm font-semibold text-foreground">Sóró Interview</p>
+              <div className="flex h-2.5 items-end gap-[1px]" aria-hidden="true">
+                <span className="soro-waveform-bar w-[2px] bg-terracotta" style={{ animationDelay: "0s" }} />
+                <span className="soro-waveform-bar w-[2px] bg-terracotta" style={{ animationDelay: "0.2s" }} />
+                <span className="soro-waveform-bar w-[2px] bg-terracotta" style={{ animationDelay: "0.1s" }} />
+                <span className="soro-waveform-bar w-[2px] bg-terracotta" style={{ animationDelay: "0.3s" }} />
+              </div>
+            </div>
             <p className="text-xs text-muted-foreground">AI moderator · live</p>
           </div>
         </div>

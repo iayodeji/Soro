@@ -141,4 +141,4 @@ The brand voice should sound like a sharp, trustworthy operator, not a generic s
 
 ## Design North Star
 
-Sóró should feel like a premium research platform built on cultural honesty: warm, credible, fast, and unmistakably human.
+Sóró should feel like a premium research platform built on cultural honesty: warm, credible, fast, and unmistakably human!

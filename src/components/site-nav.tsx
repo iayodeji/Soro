@@ -25,7 +25,7 @@ export function SiteNav({ crossLinkLabel, crossLinkHref, ctaLabel, ctaTargetId, 
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border/70 bg-background/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-border/40 bg-background/50 backdrop-blur-md">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
         <SoroLogo />
         <div className="flex items-center gap-2 sm:gap-4">
@@ -38,7 +38,7 @@ export function SiteNav({ crossLinkLabel, crossLinkHref, ctaLabel, ctaTargetId, 
           {ctaHref ? (
             <Link
               href={ctaHref}
-              className="rounded-full bg-terracotta px-4 py-2 text-sm font-semibold text-terracotta-foreground transition-colors hover:bg-terracotta/90 sm:px-5"
+              className="group relative inline-flex items-center justify-center rounded-full bg-terracotta px-4 py-2 text-sm font-semibold text-terracotta-foreground transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-terracotta/20 sm:px-5"
             >
               {ctaLabel}
             </Link>
@@ -46,7 +46,7 @@ export function SiteNav({ crossLinkLabel, crossLinkHref, ctaLabel, ctaTargetId, 
             <a
               href={ctaTargetId ? `#${ctaTargetId}` : crossLinkHref}
               onClick={handleCta}
-              className="rounded-full bg-terracotta px-4 py-2 text-sm font-semibold text-terracotta-foreground transition-colors hover:bg-terracotta/90 sm:px-5"
+              className="group relative inline-flex items-center justify-center rounded-full bg-terracotta px-4 py-2 text-sm font-semibold text-terracotta-foreground transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-terracotta/20 sm:px-5"
             >
               {ctaLabel}
             </a>

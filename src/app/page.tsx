@@ -9,7 +9,7 @@ import { StudentsFinalCta } from "@/src/components/students/students-final-cta"
 
 export default function StudentsPage() {
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen ">
       <SiteNav
         crossLinkLabel="Join waitlist"
         crossLinkHref="/#waitlist"

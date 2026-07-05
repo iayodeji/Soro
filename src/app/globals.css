@@ -65,6 +65,11 @@
   /* Tertiary accent — muted sage green */
   --sage: #7a8452;
   --sage-foreground: #fdfbf2;
+
+  /* Atmosphere cursor offset — updated by <AtmospherePointer />.
+     Defaults to 0px, so the atmosphere works fine with no JS mounted. */
+  --mx: 0px;
+  --my: 0px;
 }
 
 @layer base {
@@ -72,7 +77,8 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-transparent text-foreground;
+    position: relative;
   }
   html {
     @apply font-sans;
@@ -93,6 +99,96 @@
   }
 }
 
+/* ============================================================
+   Ambient atmosphere — drifting gradient fields + film grain,
+   sitting behind everything via body::before / body::after.
+   Colors and motion are pure CSS. --mx/--my are optionally fed
+   by <AtmospherePointer /> for cursor reactivity; they default
+   to 0px so this works with zero JS mounted.
+   ============================================================ */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-image:
+    radial-gradient(circle, rgba(183, 74, 38, 0.16), transparent 70%),
+    radial-gradient(circle, rgba(207, 163, 49, 0.14), transparent 70%),
+    radial-gradient(circle, rgba(122, 132, 82, 0.13), transparent 70%);
+  background-size: 60vw 60vw, 42vw 42vw, 32vw 32vw;
+  background-position:
+    calc(-14% + var(--mx) * 1) calc(-16% + var(--my) * 1),
+    calc(110% + var(--mx) * -1.4) calc(24% + var(--my) * 0.8),
+    calc(34% + var(--mx) * 0.6) calc(112% + var(--my) * -1.2);
+  filter: blur(60px);
+  animation: atmosphere-drift 42s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  transition: background-position 0.1s linear;
+}
+
+@keyframes atmosphere-drift {
+  0% {
+    background-position:
+      calc(-14% + var(--mx) * 1) calc(-16% + var(--my) * 1),
+      calc(110% + var(--mx) * -1.4) calc(24% + var(--my) * 0.8),
+      calc(34% + var(--mx) * 0.6) calc(112% + var(--my) * -1.2);
+  }
+  33% {
+    background-position:
+      calc(-6% + var(--mx) * 1) calc(-6% + var(--my) * 1),
+      calc(96% + var(--mx) * -1.4) calc(32% + var(--my) * 0.8),
+      calc(40% + var(--mx) * 0.6) calc(98% + var(--my) * -1.2);
+  }
+  66% {
+    background-position:
+      calc(-18% + var(--mx) * 1) calc(-4% + var(--my) * 1),
+      calc(104% + var(--mx) * -1.4) calc(14% + var(--my) * 0.8),
+      calc(28% + var(--mx) * 0.6) calc(106% + var(--my) * -1.2);
+  }
+  100% {
+    background-position:
+      calc(-14% + var(--mx) * 1) calc(-16% + var(--my) * 1),
+      calc(110% + var(--mx) * -1.4) calc(24% + var(--my) * 0.8),
+      calc(34% + var(--mx) * 0.6) calc(112% + var(--my) * -1.2);
+  }
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: -200px;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+  animation: grain-shift 0.6s steps(6) infinite;
+}
+
+@keyframes grain-shift {
+  0% { transform: translate(0, 0); }
+  16% { transform: translate(-9%, 6%); }
+  32% { transform: translate(6%, -11%); }
+  48% { transform: translate(-4%, 10%); }
+  64% { transform: translate(11%, 4%); }
+  80% { transform: translate(-7%, -6%); }
+  100% { transform: translate(0, 0); }
+}
+
+.soro-backdrop-video {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -3;
+  opacity: 0.15;
+  pointer-events: none;
+  filter: blur(40px) saturate(1.2);
+}
+
 /* Activity ticker + chat marquee */
 @keyframes soro-ticker {
   from {
@@ -108,6 +204,15 @@
 }
 .soro-ticker:hover .soro-ticker-track {
   animation-play-state: paused;
+}
+
+@keyframes soro-waveform {
+  0%, 100% { height: 35%; opacity: 0.5; }
+  50% { height: 100%; opacity: 1; }
+}
+
+.soro-waveform-bar {
+  animation: soro-waveform 0.8s ease-in-out infinite;
 }
 
 @keyframes soro-blink {
@@ -154,7 +259,9 @@
 
 .soro-float {
   animation: soro-float-up 0.4s ease-out both;
-}/* Sóró Reward Card Physics */
+}
+
+/* Sóró Reward Card Physics */
 @keyframes cardInertialPop {
   0% {
     opacity: 0;
@@ -185,4 +292,18 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+.soro-backdrop-video {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -3;
+  
+  /* 🎛️ CRANK THESE UP: */
+  opacity: 0.55;                 /* Try 0.65 (65%) or even 0.85 to make it punchy */
+  filter: blur(15px) saturate(1.4); /* Reduced the blur from 40px to 15px so you see the shapes/motion */
+  
+  pointer-events: none;
 }
