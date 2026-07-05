@@ -5,7 +5,7 @@ import { motion, AnimatePresence, type Variants } from "framer-motion"
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as const
 
-// B2B hooks that hit the nail on the head — pure utility, zero corporate fluff
+// B2B hooks 
 const BRAND_HOOKS = [
   "Honest answers from verified Nigerian students. In 48 hours.",
   "Top brands don’t guess. They ask sóró.",
