@@ -3,6 +3,8 @@ import type { Metadata, Viewport } from "next"
 import { Playfair_Display, Inter } from "next/font/google"
 import "./globals.css"
 import { PostHogProvider } from "./posthog"
+import { AtmospherePointer  } from "@/src/components/atmosphere/atmosphere-pointer"
+
 
 const playfair = Playfair_Display({
   variable: "--font-heading",
@@ -31,13 +33,35 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${playfair.variable} ${inter.variable} bg-background`}>
-      <body className="font-sans antialiased">
-        <PostHogProvider>
+  <html lang="en" className={`${playfair.variable} ${inter.variable} bg-background`}>
+    {/* Added 'relative isolation' to protect the z-index stacking context */}
+    <body className="font-sans antialiased relative isolation">
+      <PostHogProvider>
+        <AtmospherePointer />
+        
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          disablePictureInPicture
+          aria-hidden="true"
+          className="soro-backdrop-video motion-reduce:hidden"
+        >
+          <source
+            src="/Soro Ambient Signal Backdrop.mp4"
+            type="video/mp4"
+          />
+        </video>
+
+        {/* Wrap your children/pages in a relative container with a positive z-index */}
+        <div className="relative z-10 w-full min-h-screen">
           {children}
-          {process.env.NODE_ENV === "production" && <Analytics />}
-        </PostHogProvider>
-      </body>
-    </html>
-  )
+        </div>
+        
+        {process.env.NODE_ENV === "production" && <Analytics />}
+      </PostHogProvider>
+    </body>
+  </html>
+)
 }

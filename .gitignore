@@ -10,9 +10,6 @@
 # production
 /build
 
-# branding
-BRAND_GUIDE.md
-
 # debug
 npm-debug.log*
 yarn-debug.log*
