@@ -5,17 +5,21 @@ import { Playfair_Display, Inter } from "next/font/google"
 import "./globals.css"
 import { PostHogProvider } from "./posthog"
 import { AtmospherePointer  } from "@/src/components/atmosphere/atmosphere-pointer"
-
+import SoroBackground from '@/src/components/SoroBackground';
 
 const playfair = Playfair_Display({
   variable: "--font-heading",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800", "900"],
+  display: 'swap', // This is non-negotiable for FCP
+  preload: true,   // Next.js will preload the font for you
 })
 
 const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap', // This is non-negotiable for FCP
+  preload: true,   // Next.js will preload the font for you
   variable: "--font-sans",
-  subsets: ["latin"],
 })
 
 export const metadata: Metadata = {
@@ -23,7 +27,6 @@ export const metadata: Metadata = {
   description:
     "Sóró is a verified Nigerian university student research panel. Students get paid to answer questions through AI conversations, and brands get honest insights in 48 hours.",
 }
-
 export const viewport: Viewport = {
   themeColor: "#FDFBF2",
 }
@@ -39,23 +42,7 @@ export default function RootLayout({
     <body className="font-sans antialiased relative isolation">
       <PostHogProvider>
         <AtmospherePointer />
-        
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          disablePictureInPicture
-          aria-hidden="true"
-          className="soro-backdrop-video motion-reduce:hidden"
-        >
-          <source
-            src="/Soro Ambient Signal Backdrop.mp4"
-            type="video/mp4"
-          />
-        </video>
-
-        {/* Wrap your children/pages in a relative container with a positive z-index */}
+        <SoroBackground />      
         <div className="relative z-10 w-full min-h-screen">
           {children}
         </div>

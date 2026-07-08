@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sóró — Everything So Far</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0B0B10; --s1:#131318; --s2:#1A1A22; --border:#262630;
+  --text:#EEEEF2; --muted:#82828F; --dim:#54545F;
+  --gold:#CC9544; --glt:#E0AC5C; --green:#2D8659; --gdim:rgba(45,134,89,.12);
+  --red:#D9534F; --r:10px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:15px;line-height:1.65}
+::selection{background:var(--gold);color:#0B0B10}
+
+.serif{font-family:'Fraunces',serif}
+.mono{font-family:'JetBrains Mono',monospace}
+
+/* LAYOUT */
+.wrap{display:grid;grid-template-columns:260px 1fr;min-height:100vh}
+.sidebar{
+  position:sticky;top:0;height:100vh;overflow-y:auto;
+  border-right:1px solid var(--border);padding:1.75rem 1.25rem;
+}
+.side-logo{font-family:'Fraunces',serif;font-weight:700;font-size:1.3rem;letter-spacing:-.02em;margin-bottom:.2rem}
+.side-logo em{font-style:normal;color:var(--gold)}
+.side-sub{font-size:.7rem;color:var(--dim);margin-bottom:1.75rem}
+.side-nav{display:flex;flex-direction:column;gap:.15rem}
+.side-link{
+  display:block;color:var(--muted);text-decoration:none;font-size:.82rem;
+  padding:.45rem .6rem;border-radius:6px;transition:all .15s;
+}
+.side-link:hover{background:var(--s1);color:var(--text)}
+.side-link.active{background:var(--gdim);color:var(--glt);font-weight:600}
+
+main{padding:3.5rem 4rem;max-width:880px}
+.section{padding-bottom:5rem;scroll-margin-top:2rem}
+.section:last-child{padding-bottom:8rem}
+
+.eyebrow{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);margin-bottom:.6rem}
+h1.page-title{font-family:'Fraunces',serif;font-weight:700;font-size:2.6rem;letter-spacing:-.03em;margin-bottom:.5rem}
+.page-sub{color:var(--muted);font-size:.95rem;margin-bottom:.5rem;max-width:560px}
+.updated{font-size:.75rem;color:var(--dim);margin-bottom:3rem}
+
+h2{font-family:'Fraunces',serif;font-weight:700;font-size:1.55rem;letter-spacing:-.02em;margin-bottom:.9rem}
+h3{font-family:'Fraunces',serif;font-weight:600;font-size:1.1rem;letter-spacing:-.015em;margin:1.5rem 0 .6rem}
+p{color:var(--muted);margin-bottom:1rem;font-size:.92rem}
+p strong{color:var(--text);font-weight:600}
+.lead{font-size:1.02rem;color:var(--text);margin-bottom:1.5rem}
+
+/* CARDS */
+.card{background:var(--s1);border:1px solid var(--border);border-radius:var(--r);padding:1.4rem 1.6rem;margin-bottom:1rem}
+.card-row{display:flex;gap:1rem;flex-wrap:wrap}
+.card-row .card{flex:1;min-width:220px}
+
+/* TAGS */
+.tag{display:inline-block;background:var(--s2);border:1px solid var(--border);color:var(--text);font-size:.72rem;font-weight:600;padding:.25rem .65rem;border-radius:100px;margin:0 .35rem .35rem 0}
+.tag.gold{background:rgba(204,149,68,.12);border-color:rgba(204,149,68,.3);color:var(--glt)}
+.tag.green{background:var(--gdim);border-color:rgba(45,134,89,.3);color:#5FBF8E}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse;margin:1rem 0 1.5rem;font-size:.85rem}
+th{text-align:left;padding:.6rem .75rem;background:var(--s1);color:var(--muted);font-weight:600;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border)}
+td{padding:.65rem .75rem;border-bottom:1px solid var(--border);color:var(--text)}
+tr:last-child td{border-bottom:none}
+td.gold{color:var(--glt);font-weight:600}
+td.muted{color:var(--muted)}
+
+/* STAT BLOCK */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin:1.25rem 0}
+.stat{background:var(--s1);border:1px solid var(--border);border-radius:var(--r);padding:1.1rem 1rem;text-align:center}
+.stat-n{font-family:'Fraunces',serif;font-weight:700;font-size:1.5rem;color:var(--glt);letter-spacing:-.02em;line-height:1}
+.stat-l{font-size:.68rem;color:var(--muted);margin-top:.4rem;line-height:1.4}
+
+/* CODE / TEMPLATE BLOCK */
+.codeblock{
+  background:#0E0E14;border:1px solid var(--border);border-radius:8px;
+  padding:1rem 1.2rem;font-family:'JetBrains Mono',monospace;font-size:.8rem;
+  color:var(--glt);line-height:1.75;white-space:pre-wrap;margin-bottom:.5rem;
+}
+.codeblock .lbl{display:block;font-family:'Inter',sans-serif;font-size:.68rem;font-weight:600;color:var(--dim);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.6rem}
+
+/* CHECKLIST */
+.checklist{list-style:none;margin-bottom:1.25rem}
+.checklist li{display:flex;gap:.6rem;align-items:flex-start;font-size:.88rem;color:var(--muted);padding:.4rem 0;border-bottom:1px solid var(--border)}
+.checklist li:last-child{border-bottom:none}
+.checklist li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0}
+.checklist li strong{color:var(--text)}
+
+/* NUMBERED STEPS */
+.steps{display:flex;flex-direction:column;gap:0;margin-bottom:1.25rem}
+.step{display:grid;grid-template-columns:32px 1fr;gap:.9rem;padding:.85rem 0;border-bottom:1px solid var(--border)}
+.step:last-child{border-bottom:none}
+.step-n{font-family:'Fraunces',serif;font-weight:700;color:var(--dim);font-size:1.1rem}
+.step-t{font-weight:600;color:var(--text);font-size:.88rem;margin-bottom:.2rem}
+.step-b{font-size:.84rem;color:var(--muted);line-height:1.6}
+
+/* PRICING TIER */
+.tier{border-left:3px solid var(--border);padding:1rem 1.2rem;margin-bottom:.9rem;background:var(--s1);border-radius:0 var(--r) var(--r) 0}
+.tier.t1{border-color:var(--green)}
+.tier.t2{border-color:var(--gold)}
+.tier.t3{border-color:var(--dim)}
+.tier-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;flex-wrap:wrap;gap:.4rem}
+.tier-name{font-weight:700;font-size:.92rem;color:var(--text)}
+.tier-budget{font-size:.72rem;font-weight:700;padding:.2rem .55rem;border-radius:100px}
+.t1 .tier-budget{background:var(--gdim);color:#5FBF8E}
+.t2 .tier-budget{background:rgba(204,149,68,.12);color:var(--glt)}
+.t3 .tier-budget{background:var(--s2);color:var(--muted)}
+
+/* DIVIDER */
+.hr{height:1px;background:var(--border);margin:2rem 0}
+
+/* BACK TO TOP / MOBILE NAV */
+.mobile-bar{display:none}
+.mobile-toggle{display:none}
+
+/* TOC PILL CHIPS for jump nav inside section */
+.quote{
+  border-left:3px solid var(--gold);padding:.9rem 1.2rem;
+  background:rgba(204,149,68,.06);border-radius:0 8px 8px 0;
+  font-style:italic;color:var(--text);font-size:.9rem;margin-bottom:1.25rem;
+}
+
+/* ONBOARDING MODE */
+.onboard-fab{
+  position:fixed;right:1.5rem;bottom:1.5rem;z-index:300;
+  background:linear-gradient(135deg,var(--gold),var(--glt));color:#1a1408;
+  border:none;border-radius:100px;padding:.85rem 1.3rem;font-weight:700;font-size:.85rem;
+  display:flex;align-items:center;gap:.5rem;cursor:pointer;box-shadow:0 6px 24px rgba(204,149,68,.35);
+  transition:transform .15s ease;font-family:'Inter',sans-serif;
+}
+.onboard-fab:hover{transform:translateY(-2px) scale(1.03)}
+.onboard-fab .fab-sub{display:block;font-weight:500;font-size:.68rem;opacity:.75}
+.onboard-cta{
+  margin-top:.9rem;display:inline-flex;align-items:center;gap:.5rem;
+  background:rgba(204,149,68,.12);border:1px solid rgba(204,149,68,.35);color:var(--glt);
+  padding:.6rem 1rem;border-radius:100px;font-size:.82rem;font-weight:600;cursor:pointer;
+  transition:all .15s;
+}
+.onboard-cta:hover{background:rgba(204,149,68,.2)}
+
+.onboard-overlay{
+  display:none;position:fixed;inset:0;background:rgba(6,6,9,.82);backdrop-filter:blur(4px);
+  z-index:400;align-items:center;justify-content:center;padding:1.25rem;
+}
+.onboard-overlay.show{display:flex}
+.onboard-modal{
+  background:var(--s1);border:1px solid var(--border);border-radius:16px;
+  width:100%;max-width:560px;max-height:88vh;overflow-y:auto;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+  animation:onboardPop .25s ease;
+}
+@keyframes onboardPop{from{opacity:0;transform:scale(.96) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes shakeX{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+@keyframes popIn{0%{transform:scale(.7);opacity:0}60%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+.shake{animation:shakeX .35s ease}
+.pop{animation:popIn .35s ease}
+
+.onboard-head{
+  position:sticky;top:0;background:var(--s1);padding:1.1rem 1.4rem .9rem;
+  border-bottom:1px solid var(--border);z-index:2;
+}
+.onboard-head-row{display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin-bottom:.7rem}
+.onboard-stats{display:flex;align-items:center;gap:.9rem;font-size:.8rem;color:var(--muted)}
+.onboard-hearts span{opacity:1;transition:opacity .2s}
+.onboard-hearts span.lost{opacity:.25}
+.onboard-xp{color:var(--glt);font-weight:700}
+.onboard-streak{color:var(--glt);font-weight:700}
+.onboard-close{
+  background:none;border:none;color:var(--muted);font-size:1.1rem;cursor:pointer;
+  width:28px;height:28px;border-radius:6px;flex-shrink:0;
+}
+.onboard-close:hover{background:var(--s2);color:var(--text)}
+.onboard-dots{display:flex;gap:.3rem}
+.onboard-dot{height:5px;flex:1;background:var(--s2);border-radius:100px;overflow:hidden}
+.onboard-dot i{display:block;height:100%;width:0;background:var(--gold);transition:width .3s ease}
+.onboard-dot.done i{width:100%}
+.onboard-dot.current i{width:100%;background:var(--glt)}
+
+.onboard-body{padding:1.5rem 1.4rem 1.6rem}
+.onboard-eyebrow{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:.5rem}
+.onboard-title{font-family:'Fraunces',serif;font-weight:700;font-size:1.35rem;margin-bottom:.8rem;letter-spacing:-.02em}
+.onboard-blurb{color:var(--text);font-size:.92rem;line-height:1.7;margin-bottom:0}
+.onboard-role-desc{color:var(--muted);font-size:.85rem;margin-bottom:1.4rem}
+
+.onboard-q{font-weight:600;color:var(--text);font-size:.95rem;margin-bottom:1rem;line-height:1.5}
+.onboard-options{display:flex;flex-direction:column;gap:.6rem;margin-bottom:1rem}
+.opt-btn{
+  text-align:left;background:var(--s2);border:1.5px solid var(--border);color:var(--text);
+  padding:.8rem 1rem;border-radius:10px;font-size:.86rem;cursor:pointer;transition:all .12s;
+  font-family:'Inter',sans-serif;line-height:1.5;
+}
+.opt-btn:hover:not(:disabled){border-color:var(--gold);background:rgba(204,149,68,.08)}
+.opt-btn:disabled{cursor:default}
+.opt-btn.correct{border-color:var(--green);background:var(--gdim);color:#5FBF8E;font-weight:600}
+.opt-btn.incorrect{border-color:var(--red);background:rgba(217,83,79,.1);color:#E8817D}
+.opt-btn.faded{opacity:.4}
+
+.onboard-feedback{
+  padding:.85rem 1rem;border-radius:10px;font-size:.85rem;margin-bottom:1rem;line-height:1.6;
+}
+.onboard-feedback.good{background:var(--gdim);color:#5FBF8E;border:1px solid rgba(45,134,89,.3)}
+.onboard-feedback.bad{background:rgba(217,83,79,.08);color:#E8817D;border:1px solid rgba(217,83,79,.25)}
+
+.onboard-footer{display:flex;justify-content:flex-end;gap:.7rem;margin-top:.5rem}
+.onboard-btn{
+  border:none;border-radius:10px;padding:.75rem 1.4rem;font-weight:700;font-size:.85rem;
+  cursor:pointer;font-family:'Inter',sans-serif;transition:transform .1s;
+}
+.onboard-btn:active{transform:scale(.97)}
+.onboard-btn.primary{background:var(--gold);color:#1a1408}
+.onboard-btn.primary:hover{background:var(--glt)}
+.onboard-btn.ghost{background:none;border:1px solid var(--border);color:var(--muted)}
+.onboard-btn.ghost:hover{color:var(--text);border-color:var(--muted)}
+
+.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:1.2rem}
+.role-card{
+  text-align:left;background:var(--s2);border:1.5px solid var(--border);border-radius:12px;
+  padding:1rem 1.1rem;cursor:pointer;transition:all .15s;font-family:'Inter',sans-serif;color:var(--text);
+}
+.role-card:hover{border-color:var(--gold);transform:translateY(-2px)}
+.role-card .r-emoji{font-size:1.4rem;margin-bottom:.4rem;display:block}
+.role-card .r-name{font-weight:700;font-size:.88rem;margin-bottom:.25rem}
+.role-card .r-desc{font-size:.74rem;color:var(--muted);line-height:1.4}
+
+.onboard-complete{text-align:center;padding:.5rem 0 .5rem}
+.complete-emoji{font-size:3rem;margin-bottom:.6rem}
+.complete-badge{
+  display:inline-block;background:rgba(204,149,68,.12);border:1px solid rgba(204,149,68,.35);
+  color:var(--glt);padding:.4rem 1rem;border-radius:100px;font-weight:700;font-size:.85rem;margin:.6rem 0 1.2rem;
+}
+.complete-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin-bottom:1.3rem}
+.review-list{text-align:left;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:.9rem 1rem;margin-bottom:1.2rem}
+.review-list .rl-title{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:.5rem}
+.review-item{
+  display:flex;justify-content:space-between;align-items:center;padding:.4rem 0;
+  border-bottom:1px solid var(--border);font-size:.83rem;
+}
+.review-item:last-child{border-bottom:none}
+.review-item a{color:var(--glt);text-decoration:none;font-weight:600;font-size:.78rem}
+.review-item a:hover{text-decoration:underline}
+.resume-pill{
+  position:fixed;right:1.5rem;bottom:5.5rem;z-index:300;background:var(--s1);border:1px solid var(--border);
+  color:var(--muted);font-size:.75rem;padding:.5rem .9rem;border-radius:100px;display:none;
+  align-items:center;gap:.4rem;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.3);
+}
+.resume-pill.show{display:flex}
+.resume-pill:hover{color:var(--text);border-color:var(--gold)}
+
+@media(max-width:560px){
+  .role-grid{grid-template-columns:1fr}
+  .complete-stats{grid-template-columns:1fr 1fr}
+  .onboard-fab{padding:.75rem 1.05rem;font-size:.8rem}
+  .onboard-fab .fab-sub{display:none}
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .wrap{display:block}
+  .sidebar{
+    position:fixed;top:0;left:0;height:100vh;width:78%;max-width:300px;
+    transform:translateX(-100%);transition:transform .25s ease;z-index:200;
+    background:var(--bg);
+  }
+  .sidebar.open{transform:translateX(0)}
+  .mobile-bar{
+    display:flex;align-items:center;justify-content:space-between;
+    position:sticky;top:0;z-index:150;background:rgba(11,11,16,.95);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--border);
+    padding:.9rem 1.25rem;
+  }
+  .mobile-toggle{
+    display:flex;align-items:center;justify-content:center;
+    width:34px;height:34px;border-radius:8px;background:var(--s1);
+    border:1px solid var(--border);color:var(--text);cursor:pointer;font-size:1rem;
+  }
+  .mobile-logo{font-family:'Fraunces',serif;font-weight:700;font-size:1.05rem}
+  .mobile-logo em{font-style:normal;color:var(--gold)}
+  .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:190}
+  .overlay.show{display:block}
+  main{padding:2rem 1.25rem}
+  h1.page-title{font-size:1.9rem}
+  .stat-grid{grid-template-columns:1fr 1fr}
+  .card-row{flex-direction:column}
+  table{font-size:.78rem}
+  th,td{padding:.5rem}
+}
+@media(max-width:480px){
+  .stat-grid{grid-template-columns:1fr 1fr}
+  main{padding:1.5rem 1rem}
+}
+</style>
+</head>
+<body>
+
+<div class="mobile-bar">
+  <div class="mobile-logo">sóró<em>.</em> archive</div>
+  <div class="mobile-toggle" onclick="toggleNav()">☰</div>
+</div>
+<div class="overlay" id="overlay" onclick="toggleNav()"></div>
+
+<div class="wrap">
+
+<aside class="sidebar" id="sidebar">
+  <div class="side-logo">sóró<em>.</em></div>
+  <div class="side-sub">Everything decided so far</div>
+  <nav class="side-nav">
+    <a class="side-link" href="#overview">Overview</a>
+    <a class="side-link" href="#about">About us</a>
+    <a class="side-link" href="#product">Product &amp; positioning</a>
+    <a class="side-link" href="#pricing">Pricing &amp; unit economics</a>
+    <a class="side-link" href="#team">Team</a>
+    <a class="side-link" href="#culture">Vision &amp; culture</a>
+    <a class="side-link" href="#status">What's built</a>
+    <a class="side-link" href="#traction">Traction</a>
+    <a class="side-link" href="#market">Market research</a>
+    <a class="side-link" href="#competition">Competition</a>
+    <a class="side-link" href="#gtm">Go-to-market</a>
+    <a class="side-link" href="#leads">LinkedIn lead framework</a>
+    <a class="side-link" href="#templates">Outreach templates</a>
+    <a class="side-link" href="#tools">Tools &amp; AI stack</a>
+    <a class="side-link" href="#capital">Capital needed</a>
+    <a class="side-link" href="#phase2">Phase 2 — self-serve tool</a>
+    <a class="side-link" href="#phase3">Phase 3 — data API</a>
+    <a class="side-link" href="#scaling">Scaling plays</a>
+    <a class="side-link" href="#nextsteps">Next steps</a>
+  </nav>
+</aside>
+
+<main>
+
+<section class="section" id="overview">
+  <div class="eyebrow">Reference doc</div>
+  <h1 class="page-title">Everything on Sóró, so far.</h1>
+  <p class="page-sub">A single offline file with every decision, number, and template from building this out. Open it in any browser — works without internet once downloaded.</p>
+  <div class="updated">Updated July 8, 2026 · 18 sections</div>
+
+  <div class="card">
+    <p style="margin-bottom:.5rem"><strong>The one-line pitch:</strong> Sóró pays verified Nigerian university students to answer brand research questions through AI conversations — not boring forms. Brands get a structured report in 48 hours.</p>
+    <button class="onboard-cta" onclick="openOnboarding()">🎓 New here? Take the 5-min interactive onboarding →</button>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <div class="eyebrow">01</div>
+  <h2>About us</h2>
+  <p class="lead">Founded 2026.</p>
+
+  <p>Traditional market research in Nigeria is an expensive gamble. It takes months, costs millions, and yields stale data that Gen Z has already outgrown by the time the PDF hits your inbox. Every growth operator, marketing manager, and researcher knows the frustration: boring long-form surveys completely fail with the digital-native consumer — survey fatigue, rushed answers, and campaigns that burn cash on broken data.</p>
+
+  <h3>What we do</h3>
+  <p>Sóró is the AI-native consumer intelligence platform built for the speed of modern business. We protect margins and scale top-line revenue by replacing legacy questionnaires with dynamic, gamified experiences — interactive AI conversations, intuitive swipe mechanics, native mini-games. We capture Gen Z at their most authentic, extract raw behavioral data, and deliver clear, executive-ready insights that tell companies exactly how to win.</p>
+
+  <h3>How we help</h3>
+  <div class="card-row">
+    <div class="card">
+      <div style="font-weight:700;font-size:.85rem;margin-bottom:.4rem">Growth &amp; revenue operators</div>
+      <p style="margin:0;font-size:.85rem">Stop launching blind. Build products, optimize conversion, and unlock new monetization channels backed by real-time behavioral truth instead of guesswork.</p>
+    </div>
+    <div class="card">
+      <div style="font-weight:700;font-size:.85rem;margin-bottom:.4rem">Marketing managers</div>
+      <p style="margin:0;font-size:.85rem">Protect ad spend. Stop burning budgets on guessing games and deploy campaigns anchored in exact spending habits and real-time cultural nuances.</p>
+    </div>
+    <div class="card">
+      <div style="font-weight:700;font-size:.85rem;margin-bottom:.4rem">Research &amp; strategy teams</div>
+      <p style="margin:0;font-size:.85rem">Cut out bloated agency overhead. Access verified, high-validity data collected through native digital experiences at a fraction of traditional cost and timeline.</p>
+    </div>
+  </div>
+
+  <div class="quote">Stop wasting capital on research methods your audience hates. Build strategy on predictive, high-yielding consumer intelligence.</div>
+
+  <p style="font-size:.85rem">📩 Partner with Sóró to optimize spend, de-risk strategy, and unlock growth: <a href="https://www.getsoro.app" style="color:var(--glt)">getsoro.app</a></p>
+</section>
+
+<section class="section" id="product">
+  <div class="eyebrow">02</div>
+  <h2>Product &amp; positioning</h2>
+  <p>Sóró is two products in one: a panel of verified Nigerian university students (the respondent side) and a B2B research service that sells access to that panel via AI-moderated interviews (the company side).</p>
+
+  <h3>The core insight</h3>
+  <p>The UX <em>is</em> the data-quality argument. Bad survey UX (Google Forms) makes students rush and lie. A conversational, paid, engaging experience gets honest answers — which is the actual product brands are paying for, not "fun design."</p>
+
+  <h3>What gets sold</h3>
+  <p>Not raw data, not a dashboard — a <strong>research report</strong> backed by verified respondents: summary of findings, demographic breakdown, verbatim quotes, CSV + PDF export. Companies pay <strong>upfront</strong> before any survey is deployed, which removes Sóró's capital risk entirely.</p>
+
+  <h3>Why university students first</h3>
+  <ul class="checklist">
+    <li>Most brand-hungry, fastest-growing consumer segment in Nigeria</li>
+    <li>Verifiable in a way generic "Gen Z" panels aren't (university email / student ID)</li>
+    <li>About to enter peak earning years — brands want them before habits solidify</li>
+    <li>Verification directly solves the data-quality problem competitors have</li>
+  </ul>
+</section>
+
+<section class="section" id="pricing">
+  <div class="eyebrow">03</div>
+  <h2>Pricing &amp; unit economics</h2>
+
+  <h3>Transactional pricing (current GTM)</h3>
+  <p style="font-size:.85rem;margin-bottom:1rem">A <strong>data track</strong> = one distinct AI-moderated conversation experience on a specific topic. More tracks = richer picture = better brand decisions. Each additional track re-engages the same cohort, so the incremental cost per track is roughly <strong>student payouts + a shrinking slice of ops</strong> — the discount trend below stays above that cost floor so volume gets cheaper for the buyer without ever running at a loss for us.</p>
+
+  <h3>100-student package</h3>
+  <div class="card">
+    <table>
+      <tr><th>Package</th><th>Price</th><th>+ per track</th></tr>
+      <tr><td>1 data track</td><td class="gold">₦250,000</td><td class="muted">base</td></tr>
+      <tr><td>2 data tracks</td><td class="gold">₦430,000</td><td class="muted">+₦180,000</td></tr>
+      <tr><td>3 data tracks</td><td class="gold">₦580,000</td><td class="muted">+₦150,000</td></tr>
+      <tr><td>4 data tracks</td><td class="gold">₦710,000</td><td class="muted">+₦130,000</td></tr>
+    </table>
+  </div>
+  <p style="font-size:.8rem">Incremental cost per extra track ≈ ₦100,000 payouts (100 × ₦1,000) + ~₦5–10k ops. Marginal price never drops below ~₦130,000, so every added track still clears ~₦20-30k margin on top of the base package's ~56% margin.</p>
+
+  <h3>50-student package</h3>
+  <div class="card">
+    <table>
+      <tr><th>Package</th><th>Price</th><th>+ per track</th></tr>
+      <tr><td>1 data track</td><td class="gold">₦150,000</td><td class="muted">base</td></tr>
+      <tr><td>2 data tracks</td><td class="gold">₦260,000</td><td class="muted">+₦110,000</td></tr>
+      <tr><td>3 data tracks</td><td class="gold">₦350,000</td><td class="muted">+₦90,000</td></tr>
+      <tr><td>4 data tracks</td><td class="gold">₦430,000</td><td class="muted">+₦80,000</td></tr>
+    </table>
+  </div>
+  <p style="font-size:.8rem">Incremental cost per extra track ≈ ₦50,000 payouts (50 × ₦1,000) + ~₦5k ops. Marginal price floor sits at ~₦80,000, keeping every add-on track ~₦25k+ profitable.</p>
+
+  <h3>Enterprise retainer (6–12 month horizon)</h3>
+  <div class="card">
+    <ul class="checklist" style="margin:0">
+      <li>Monthly contracts, USD-denominated</li>
+      <li>200–500 students/month + 2–4 data tracks/month</li>
+      <li>Dashboard or API delivery + monthly insight report</li>
+      <li><strong>Near-term target:</strong> $5k–$10k/month × 3 brands = $15k MRR</li>
+      <li><strong>Long-term:</strong> ~$100k/month per large enterprise client</li>
+    </ul>
+  </div>
+
+  <h3>Target buyers</h3>
+  <ol class="checklist" style="list-style:decimal;margin-left:1.1rem">
+    <li style="border-bottom:none"><strong>Brand marketing managers</strong> (Nigerian FMCG, fintech, telco) — primary</li>
+    <li style="border-bottom:none"><strong>AI companies</strong> — informal first, then formal outreach ~3 weeks post-launch to understand data format needs</li>
+  </ol>
+  <p style="font-size:.85rem">Buyer persona: marketing managers who need Gen Z data to justify campaign spend.</p>
+
+  <h3>Student earnings</h3>
+  <div class="stat-grid">
+    <div class="stat"><div class="stat-n">₦200+</div><div class="stat-l">per question answered</div></div>
+    <div class="stat"><div class="stat-n">₦1,000</div><div class="stat-l">per full interview</div></div>
+    <div class="stat"><div class="stat-n">₦5,000</div><div class="stat-l">premium studies</div></div>
+    <div class="stat"><div class="stat-n">₦1,000</div><div class="stat-l">cashout minimum</div></div>
+  </div>
+  <p>Withdraw to: <span class="tag">OPay</span><span class="tag">PalmPay</span><span class="tag">Bank Transfer</span></p>
+  <p style="font-size:.8rem">Note: priced slightly below what real research firms (Kantar, Webhaptic) charge in Nigeria — room to push higher as trust builds.</p>
+</section>
+
+<section class="section" id="team">
+  <div class="eyebrow">04</div>
+  <h2>Team</h2>
+  <div class="card-row">
+    <div class="card">
+      <h3 style="margin-top:0">Inioluwa Ayodeji (Ini)</h3>
+      <p><strong>Co-founder &amp; CEO.</strong> Manages and works across product, sales, team, and everything — the connective tissue across the whole company.</p>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">Inioluwa Rotimi (Innex)</h3>
+      <p><strong>Co-founder &amp; CMO.</strong> Runs growth and distribution.</p>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">David</h3>
+      <p><strong>New hire, dev.</strong> Handles development work alongside Ini and Innex.</p>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">Adeogo</h3>
+      <p><strong>Community manager.</strong> Handles community engagement and community growth.</p>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">Mahmud</h3>
+      <p><strong>Administrator.</strong> Helps with additional tasks, serves as PA to the team, steps into other roles as needed, and is also assistant community manager.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="culture">
+  <div class="eyebrow">05</div>
+  <h2>Long-term vision &amp; culture</h2>
+
+  <h3>Vision</h3>
+  <p>Building a global data and infrastructure company that helps shape how decisions are made worldwide.</p>
+
+  <h3>Culture</h3>
+  <p>Fun, fast-moving, and built on individual freedom and autonomy. People are encouraged to do their own thing — even to build their own startups alongside working here.</p>
+</section>
+
+<section class="section" id="status">
+  <div class="eyebrow">06</div>
+  <h2>What's built</h2>
+  <ul class="checklist">
+    <li><strong>Live:</strong> Student + company landing pages deployed at <span class="mono">soro-landing-pages.vercel.app</span></li>
+    <li><strong>Remaining:</strong> Custom gamified waitlist system</li>
+    <li><strong>Remaining:</strong> Full platform — student app, company dashboard, admin panel, API routes (architecture + build prompts already written, see Next Steps)</li>
+  </ul>
+</section>
+
+<section class="section" id="traction">
+  <div class="eyebrow">07</div>
+  <h2>Traction</h2>
+  <p>Waitlist is live and launched. Now actively reaching out to brands and companies.</p>
+  <div class="card-row">
+    <div class="card">
+      <h3 style="margin-top:0">Day 1 — Jul 6</h3>
+      <div class="stat-grid" style="grid-template-columns:repeat(2,1fr)">
+        <div class="stat"><div class="stat-n">264</div><div class="stat-l">verified students</div></div>
+        <div class="stat"><div class="stat-n">375</div><div class="stat-l">community members</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">Current</h3>
+      <div class="stat-grid" style="grid-template-columns:repeat(2,1fr)">
+        <div class="stat"><div class="stat-n">370+</div><div class="stat-l">verified students</div></div>
+        <div class="stat"><div class="stat-n">450+</div><div class="stat-l">community members</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="market">
+  <div class="eyebrow">08</div>
+  <h2>Market research</h2>
+
+  <h3>The numbers that matter</h3>
+  <div class="card-row">
+    <div class="card"><div class="stat-n" style="font-size:1.8rem">$140B</div><p style="margin:.4rem 0 0">Global market research industry (2024). Africa is under 2% of it despite being the fastest-growing consumer market on earth.</p></div>
+    <div class="card"><div class="stat-n" style="font-size:1.8rem">430+</div><p style="margin:.4rem 0 0">Nigerian fintechs as of early 2025, up from 255 a year prior. Nigeria = 28% of all African fintechs, ~36% of African fintech VC funding 2020–2024.</p></div>
+  </div>
+
+  <h3>What Kantar is (the model to beat)</h3>
+  <p>Kantar: $3.4B revenue (2024), 20,000 employees, 90+ countries, valued at $4B when Bain Capital bought 60% in 2019. Their products: consumer panels (subscription access), brand tracking, custom research (what Sóró does first), ad effectiveness. Kantar operates in Nigeria, Kenya, Ghana, South Africa, Egypt, Morocco, Senegal — but panels are expensive, skew older, and inaccessible to startups.</p>
+  <div class="quote">The panel IS the business. Every Kantar product flows through their consumer panel. That's the moat Sóró is building from day one with the student panel.</div>
+
+  <h3>Realistic revenue path</h3>
+  <table>
+    <tr><th>Stage</th><th>Scope</th><th>Approx ARR</th></tr>
+    <tr><td>Year 1</td><td>Nigerian university students, 10 briefs/mo</td><td class="gold">~$12k</td></tr>
+    <tr><td>Year 2</td><td>+ fintechs &amp; NGOs, 50 briefs/mo</td><td class="gold">~$60k</td></tr>
+    <tr><td>Year 3</td><td>+ subscriptions, 200 briefs/mo</td><td class="gold">~$240k</td></tr>
+    <tr><td>Maturity</td><td>Pan-Africa panel, intl clients, syndicated data</td><td class="gold">$2–5M+</td></tr>
+  </table>
+  <p>The $100M ceiling only exists if Sóró becomes infrastructure — subscription panel access, syndicated reports, data licensing — not a per-brief survey shop. Same structural business as Kantar/Numerator, just AI-native and Africa-first before anyone else builds it.</p>
+</section>
+
+<section class="section" id="competition">
+  <div class="eyebrow">09</div>
+  <h2>Competition</h2>
+  <table>
+    <tr><th>Platform</th><th>Verified African youth</th><th>AI conversations</th><th>Affordable</th><th>48hr turnaround</th></tr>
+    <tr><td>Kantar / Nielsen</td><td class="muted">✗</td><td class="muted">✗</td><td class="muted">✗</td><td class="muted">✗</td></tr>
+    <tr><td>GeoPoll</td><td class="muted">✗</td><td class="muted">✗</td><td class="muted">✗</td><td class="muted">✗</td></tr>
+    <tr><td>Google Forms / Typeform</td><td class="muted">✗</td><td class="muted">✗</td><td class="gold">✓</td><td class="muted">Partial</td></tr>
+    <tr><td>Craze (US)</td><td class="muted">✗ (.edu only)</td><td class="gold">✓</td><td class="gold">✓</td><td class="gold">✓</td></tr>
+    <tr><td><strong>Sóró</strong></td><td class="gold">✓</td><td class="gold">✓</td><td class="gold">✓</td><td class="gold">✓</td></tr>
+  </table>
+
+  <h3>What was stolen from Craze (US competitor)</h3>
+  <ul class="checklist">
+    <li>"Brief in. Report out. Same day." positioning</li>
+    <li>Per-question payment model (feels fair, transparent)</li>
+    <li>Fraud screening + daily earn caps</li>
+    <li>Real-time panel activity feed on landing page</li>
+    <li>Analyst AI to interrogate the report (premium feature)</li>
+    <li>Free first brief to remove friction</li>
+  </ul>
+  <h3>Adapted for Nigeria</h3>
+  <ul class="checklist">
+    <li>.edu email → Nigerian university emails or student ID upload</li>
+    <li>Venmo/CashApp → OPay, PalmPay, bank transfer</li>
+    <li>iOS-only → Android-first (most of panel is on Tecno/Infinix)</li>
+    <li>$0.20/question → ₦200–500/question</li>
+  </ul>
+</section>
+
+<section class="section" id="gtm">
+  <div class="eyebrow">10</div>
+  <h2>Go-to-market sequence</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">1</div>
+      <div><div class="step-t">Nigerian fintechs — now</div><div class="step-b">430+ companies fighting for the same Gen Z customer with zero verified data. Direct LinkedIn outreach to Heads of Product/Marketing. Fastest yes, easiest to reach.</div></div>
+    </div>
+    <div class="step">
+      <div class="step-n">2</div>
+      <div><div class="step-t">International orgs + FMCG — Year 1</div><div class="step-b">UNICEF, USAID, Gates Foundation, Unilever, Nestlé. USD budgets, constant need for youth data. One deal here = 40+ local briefs.</div></div>
+    </div>
+    <div class="step">
+      <div class="step-n">3</div>
+      <div><div class="step-t">Pan-Africa + subscriptions — Year 2–3</div><div class="step-b">Expand panel to Ghana, Kenya, South Africa. Shift from per-brief to monthly retainer access. This is where the bigger ceiling appears.</div></div>
+    </div>
+  </div>
+
+  <h3>The cash flow advantage</h3>
+  <p>Company pays before the survey runs → Sóró pays students after → Sóró never fronts a naira. The client funds the whole cycle. <strong>Near-zero capital needed to start</strong> (domain + hosting only, under ₦20,000 total).</p>
+</section>
+
+<section class="section" id="leads">
+  <div class="eyebrow">11</div>
+  <h2>LinkedIn lead framework</h2>
+
+  <h3>Who to target — in order</h3>
+
+  <div class="tier t1">
+    <div class="tier-head"><span class="tier-name">🔥 Priority 1 — Nigerian Fintechs</span><span class="tier-budget">₦250k–₦500k/brief</span></div>
+    <p style="margin:0 0 .6rem">Why: 430+ companies competing for Gen Z with zero verified student data.</p>
+    <p style="margin:0 0 .3rem;font-size:.8rem"><strong>Titles:</strong> Head of Product, Head of Marketing, CMO, Head of Growth</p>
+    <p style="margin:0;font-size:.8rem"><strong>Companies:</strong> Kuda, Cowrywise, PiggyVest, PalmPay, Moniepoint, Carbon, FairMoney, Flutterwave, Paystack, OPay</p>
+  </div>
+
+  <div class="tier t2">
+    <div class="tier-head"><span class="tier-name">💰 Priority 2 — International Orgs</span><span class="tier-budget">$2k–$10k/brief</span></div>
+    <p style="margin:0 0 .6rem">Why: USD budgets, run youth studies constantly, pay 5–10x local rates.</p>
+    <p style="margin:0 0 .3rem;font-size:.8rem"><strong>Titles:</strong> Research Officer, M&amp;E Lead, Country Director, Programme Manager</p>
+    <p style="margin:0;font-size:.8rem"><strong>Orgs:</strong> UNICEF Nigeria, USAID Nigeria, Gates Foundation, UN Women Nigeria, Tony Elumelu Foundation, Mercy Corps</p>
+  </div>
+
+  <div class="tier t3">
+    <div class="tier-head"><span class="tier-name">📦 Priority 3 — FMCG + Agencies</span><span class="tier-budget">₦500k–₦2M/brief</span></div>
+    <p style="margin:0 0 .6rem">Why: Larger budgets, longer cycle. Agencies are a multiplier — one signs, you access all their clients.</p>
+    <p style="margin:0 0 .3rem;font-size:.8rem"><strong>Titles:</strong> Consumer Insights Manager, Brand Manager, Head of Strategy, Research Director</p>
+    <p style="margin:0;font-size:.8rem"><strong>Companies:</strong> Unilever Nigeria, Nestlé Nigeria, Nigerian Breweries, Noah's Ark, X3M Ideas, DDB Nigeria</p>
+  </div>
+
+  <h3>Finding them — boolean search strings</h3>
+  <div class="codeblock"><span class="lbl">Fintechs — product leads</span>"head of product" OR "chief product officer" AND Nigeria AND (fintech OR "financial services")</div>
+  <div class="codeblock"><span class="lbl">Fintechs — marketing leads</span>"head of marketing" OR "CMO" AND Nigeria AND (Kuda OR PalmPay OR Cowrywise OR Moniepoint)</div>
+  <div class="codeblock"><span class="lbl">International orgs</span>"research officer" OR "M&E" OR "monitoring and evaluation" AND Nigeria AND (UNICEF OR USAID OR "Gates Foundation")</div>
+  <div class="codeblock"><span class="lbl">FMCG — insights leads</span>"consumer insights" OR "brand manager" AND Nigeria AND ("FMCG" OR "consumer goods")</div>
+
+  <h3>Best method: company page → People tab</h3>
+  <div class="steps">
+    <div class="step"><div class="step-n">1</div><div><div class="step-b">Search the company on LinkedIn → open their company page</div></div></div>
+    <div class="step"><div class="step-n">2</div><div><div class="step-b">Click the "People" tab below their header</div></div></div>
+    <div class="step"><div class="step-n">3</div><div><div class="step-b">Type a keyword like "marketing" or "product" or "research" in the search box on that page</div></div></div>
+    <div class="step"><div class="step-n">4</div><div><div class="step-b">Repeat for each company on the target list</div></div></div>
+  </div>
+
+  <div class="card" style="border-color:rgba(204,149,68,.3)">
+    <p style="margin:0"><strong>Daily target:</strong> find/qualify 10 people/day, send max 5 connection requests/day. 5/day × 5 days = 25 new connections/week = 3–5 replies if message quality is good.</p>
+  </div>
+</section>
+
+<section class="section" id="templates">
+  <div class="eyebrow">12</div>
+  <h2>Outreach templates</h2>
+
+  <h3>Connection request — the formula</h3>
+  <p>One job: get accepted. Under 300 characters. One specific observation. No pitch, no ask.</p>
+  <div class="codeblock"><span class="lbl">Fintech template</span>Saw [Company]'s campus account push — interesting move. Building something for exactly that market. Would love to connect, [First Name].</div>
+  <div class="codeblock"><span class="lbl">International org template</span>Spotted your work on [Study/Programme]. Building something adjacent for Nigerian youth research. Would love to connect.</div>
+  <div class="codeblock"><span class="lbl">Generic fallback</span>Building a verified Nigerian university student research panel — saw your work in [space]. Would love to connect.</div>
+
+  <h3>First message — after they accept (wait 2–3 days)</h3>
+  <p>Under 5 lines. Pick ONE ask. Never request a call in message one.</p>
+  <div class="codeblock"><span class="lbl">Fintech example</span>Hey [Name] — [Company]'s student account is the right call. I imagine you're partly flying blind on how that cohort actually thinks about digital banking vs. agents though.
+
+We run AI-moderated interviews with verified students from UNILAG, UI, OAU etc. — structured reports in 48 hours.
+
+Is student research something your team runs at all?</div>
+
+  <h3>Rules to memorize</h3>
+  <ul class="checklist">
+    <li>Connection request stays under 300 characters — LinkedIn cuts it off</li>
+    <li>Never mention price, "platform," or "solution" in the connection request</li>
+    <li>Always end with their first name — converts better</li>
+    <li>If no specific hook exists, spend 2 minutes on their profile before sending</li>
+    <li>One ask per message — pick from: "Is this something your team runs?" / "Want a sample report?" / "Worth a look?"</li>
+    <li>No reply after 5 days → one follow-up, then let go</li>
+  </ul>
+</section>
+
+<section class="section" id="tools">
+  <div class="eyebrow">13</div>
+  <h2>Tools &amp; AI stack</h2>
+
+  <h3>Lead gen tools, by budget</h3>
+  <table>
+    <tr><th>Tool</th><th>Cost</th><th>Use</th></tr>
+    <tr><td>LinkedIn free search</td><td class="muted">Free</td><td>Manual boolean search, works fine to start</td></tr>
+    <tr><td>Apollo.io</td><td class="gold">Free–$49/mo</td><td>150 free contacts/mo with emails, best starting tool</td></tr>
+    <tr><td>Hunter.io</td><td class="muted">Free tier</td><td>Find corporate emails, 50 searches/mo free</td></tr>
+    <tr><td>Instantly.ai / Lemlist</td><td class="gold">~$37/mo</td><td>Automated cold email sequences</td></tr>
+    <tr><td>LinkedIn Sales Navigator</td><td class="gold">~$100/mo</td><td>Most powerful filters — worth it once running properly</td></tr>
+    <tr><td>Clay</td><td class="gold">$150+/mo</td><td>AI personalization at scale, best for content lead</td></tr>
+  </table>
+  <p style="font-size:.8rem"><strong>Recommended start:</strong> Apollo free + Claude for message personalization + manual LinkedIn search. Costs ₦0.</p>
+
+  <h3>Build stack (full platform)</h3>
+  <p>Next.js 14 (App Router) · Supabase (DB, Auth, Storage, Realtime) · Claude API (claude-sonnet-4-6) for AI interviews + report generation · Paystack (payments in + transfers out) · RLS on every table · Money stored in kobo, never naira floats.</p>
+</section>
+
+<section class="section" id="capital">
+  <div class="eyebrow">14</div>
+  <h2>Capital needed</h2>
+  <div class="stat-grid">
+    <div class="stat"><div class="stat-n" style="font-size:1.3rem">₦8k/yr</div><div class="stat-l">Domain</div></div>
+    <div class="stat"><div class="stat-n" style="font-size:1.3rem">Free</div><div class="stat-l">Hosting (Vercel)</div></div>
+    <div class="stat"><div class="stat-n" style="font-size:1.3rem">Free</div><div class="stat-l">Database (Supabase)</div></div>
+    <div class="stat"><div class="stat-n" style="font-size:1.3rem">~1.5%</div><div class="stat-l">Payout fee only</div></div>
+  </div>
+  <p><strong>Total hard cash to start: under ₦20,000.</strong> Companies fund the cycle — you never front student payouts. Capital only becomes relevant later, for paid ads to grow the panel faster, or hiring sales before revenue justifies it.</p>
+
+  <h3>Correct build order</h3>
+  <ol style="padding-left:1.2rem;color:var(--muted);font-size:.88rem;line-height:2">
+    <li>Get one company to verbally commit to a brief</li>
+    <li>Build the minimum version that can run that one brief</li>
+    <li>Charge upfront before touching code for their specific questions</li>
+    <li>Deliver, collect margin</li>
+    <li>Use proof + cash to go to client #2</li>
+  </ol>
+</section>
+
+<section class="section" id="phase2">
+  <div class="eyebrow">15 — Parked</div>
+  <h2>Phase 2 — self-serve survey tool</h2>
+  <p>Not a separate company — a funnel into Sóró's panel. Lets anyone build AI-conversational surveys (voice-to-text, dynamic follow-ups, reactions) using Sóró's tech, distributed to <em>their own</em> audience, not the panel.</p>
+
+  <h3>Reference: how Tally.so prices (the model this borrows from)</h3>
+  <table>
+    <tr><th>Tier</th><th>Price</th><th>Includes</th></tr>
+    <tr><td>Free</td><td class="gold">$0</td><td>Unlimited forms/submissions, branding stays on, no custom domain</td></tr>
+    <tr><td>Pro</td><td class="gold">$29/mo</td><td>Remove branding, custom domain, analytics, team seats</td></tr>
+    <tr><td>Business</td><td class="gold">$89/mo</td><td>Data retention control, email verification, compliance</td></tr>
+  </table>
+  <p style="font-size:.8rem">Tally is bootstrapped, not VC-backed — wins purely by being the cheapest serious option vs. Typeform/SurveyMonkey.</p>
+
+  <h3>Proposed Sóró self-serve pricing</h3>
+  <ul class="checklist">
+    <li><strong>Free</strong> — unlimited surveys, capped responses/mo, static questions only, Sóró branding stays</li>
+    <li><strong>Pro (~$15–25/mo)</strong> — unlocks AI-conversational mode (the real differentiator), unlimited responses, branding removed</li>
+    <li><strong>Team (~$49–79/mo)</strong> — multi-seat, custom domain, exportable reports, integrations</li>
+  </ul>
+  <div class="quote">Build after Phase 1 is proven — first paid briefs landed. Don't split focus across two unproven products at once.</div>
+</section>
+
+<section class="section" id="phase3">
+  <div class="eyebrow">16 — Phase 3</div>
+  <h2>The data API — the actual $100M unlock</h2>
+
+  <div class="quote">"Every brief you run grows a proprietary dataset of African youth consumer behaviour. Searchable. Queryable. Sellable infinitely. One insight gets generated once and sold to a hundred buyers."</div>
+
+  <p>Every brief Sóró runs — every conversation, every opinion, every demographic data point — gets stored. By the time Phase 3 launches, Sóró will have hundreds of studies worth of proprietary African youth insights that nobody else on the continent has collected in this form. That dataset is the real product. The API is just how you sell access to it.</p>
+
+  <h3>Why this changes the entire business</h3>
+  <div class="card-row">
+    <div class="card">
+      <div style="font-weight:700;margin-bottom:.5rem">Brief model (Phase 1)</div>
+      <p style="margin:0;font-size:.85rem">Time-constrained. Capacity-constrained. Earn once per brief. Revenue scales with your team's bandwidth.</p>
+    </div>
+    <div class="card" style="border-color:rgba(204,149,68,.3)">
+      <div style="font-weight:700;margin-bottom:.5rem;color:var(--glt)">Data API (Phase 3)</div>
+      <p style="margin:0;font-size:.85rem">Near-zero marginal cost. Sell the same dataset to 500 buyers. Revenue scales with the size of the dataset, not your team.</p>
+    </div>
+  </div>
+
+  <h3>Three product layers</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">1</div>
+      <div>
+        <div class="step-t">Insight Search Portal</div>
+        <div class="step-b">A company types a question — "what do Nigerian university students think about mobile savings accounts?" — and gets synthesised findings from existing Sóró data. Pay per search ($5–$50) or monthly subscription ($200–$500/mo). Closest comparison: Bloomberg Terminal for African youth consumer data.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">2</div>
+      <div>
+        <div class="step-t">Developer API</div>
+        <div class="step-b">A fintech plugs Sóró's API into their product. Every time they need consumer context — sentiment on a feature, preference data for a cohort — they query and get structured JSON back. Priced on a credit model (prepaid, per query) or monthly tiers. Reference: Twilio charges per API call; OpenAI charges per token. Sóró charges per insight query.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">3</div>
+      <div>
+        <div class="step-t">Bulk Data Licensing</div>
+        <div class="step-b">Large orgs (Unilever global, government agencies, impact funds, AI companies training models on African demographic data) pay annual flat fees for bulk anonymised dataset access. One deal = recurring revenue. Reference: Numerator licenses its consumer panel data to universities, hedge funds, and CPG giants for six-figure annual fees.</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>API pricing model — what works for data products</h3>
+  <p>Data APIs don't follow the same pricing logic as service APIs. Usage is irregular — a company might query intensively before a product launch, then go quiet for months. Research shows the best models for this pattern are:</p>
+  <table>
+    <tr><th>Model</th><th>How it works</th><th>Best for</th></tr>
+    <tr><td class="gold">Credit/prepaid</td><td>Companies buy credits upfront, consumed per query. Unused credits roll over. Reduces abuse, provides immediate cash flow.</td><td>Most Sóró API users — aligns with irregular research cycles</td></tr>
+    <tr><td>Subscription tiers</td><td>Monthly flat fee for X queries/month. Overage charged per query.</td><td>High-frequency users like agencies or embedded product teams</td></tr>
+    <tr><td>Annual license</td><td>Flat annual fee for full dataset access</td><td>AI companies, research institutions, government, large enterprises</td></tr>
+  </table>
+
+  <h3>The context connector — Sóró as a RAG layer for AI platforms</h3>
+  <p>This is distinct from selling training data. Training data improves a model permanently and statically. A <strong>context connector</strong> plugs into an existing AI platform and gives it live, queryable African consumer intelligence at decision time — without retraining anything.</p>
+
+  <div class="card" style="border-color:rgba(204,149,68,.3);margin-bottom:.75rem">
+    <div style="font-weight:700;font-size:.88rem;margin-bottom:.6rem;color:var(--glt)">How it works</div>
+    <div class="steps" style="margin-bottom:0">
+      <div class="step" style="padding:.6rem 0">
+        <div class="step-n" style="font-size:.9rem">1</div>
+        <div><div class="step-b">A fintech's AI product manager bot is deciding what to recommend to a 21-year-old Lagos student</div></div>
+      </div>
+      <div class="step" style="padding:.6rem 0">
+        <div class="step-n" style="font-size:.9rem">2</div>
+        <div><div class="step-b">Instead of relying on generic training data, it queries the Sóró connector: <span class="mono" style="font-size:.75rem">"what do Lagos university students aged 19–22 think about savings products?"</span></div></div>
+      </div>
+      <div class="step" style="padding:.6rem 0;border-bottom:none">
+        <div class="step-n" style="font-size:.9rem">3</div>
+        <div><div class="step-b">Gets back structured, current, verified African consumer context. Makes a better decision.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <p>This is essentially RAG (Retrieval-Augmented Generation) as a service — but the retrieval corpus is Sóró's proprietary African consumer panel, not the open web. Every AI platform that wants to serve African markets well has this problem: their models were trained mostly on Western data and perform poorly when making decisions about African consumers. Sóró becomes the missing context layer.</p>
+
+  <div class="card-row">
+    <div class="card">
+      <div style="font-weight:700;font-size:.85rem;margin-bottom:.4rem">Who plugs this in</div>
+      <ul class="checklist" style="margin:0">
+        <li>Fintechs with AI recommendation engines (Kuda, Carbon, Cowrywise)</li>
+        <li>E-commerce platforms personalising for Nigerian users</li>
+        <li>AI copilots built for African businesses</li>
+        <li>Marketing AI tools targeting African Gen Z</li>
+        <li>Any company building on Claude, GPT, or Gemini and serving African markets</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div style="font-weight:700;font-size:.85rem;margin-bottom:.4rem">How it's sold</div>
+      <p style="font-size:.83rem;margin:0;color:var(--muted)">A Sóró MCP (Model Context Protocol) connector — the standard emerging for giving AI models access to external knowledge sources. Listed on Claude's MCP marketplace, OpenAI's plugin store, and LangChain's tool registry. Developers install it in minutes. Priced per query or monthly subscription. The flywheel: more AI platforms use it → more queries → more revenue → funds more research → better context → more platforms want it.</p>
+    </div>
+  </div>
+
+  <div class="card" style="border-color:rgba(45,134,89,.3)">
+    <p style="margin:0;font-size:.85rem"><strong>The compounding advantage:</strong> Unlike training data (sold once, static) and unlike custom briefs (sold once per client), the context connector generates revenue <em>every time</em> an AI makes a decision using Sóró's context. If a fintech's recommendation engine fires 10,000 times a day and queries Sóró each time, that's 10,000 billable events daily from one integration. The panel gets more valuable as it grows, and the connector revenue scales automatically with the AI platforms' own growth.</p>
+  </div>
+
+  <h3>The AI training data angle — two distinct assets</h3>
+  <p>This is the one nobody is talking about yet, and Sóró actually has <em>two</em> things AI companies will pay for, not one.</p>
+
+  <div class="card" style="border-color:rgba(45,134,89,.3);margin-bottom:.75rem">
+    <div style="font-weight:700;font-size:.88rem;margin-bottom:.4rem;color:var(--glt)">Asset 1 — Consumer insight data</div>
+    <p style="margin:0;font-size:.85rem">AI companies building models for African markets — African language models, fintech AI, healthcare AI, recommendation engines — need high-quality, demographically rich African consumer data to train on. Structured JSON of what verified Nigerian students think, buy, prefer, and spend on is exactly that. <a href="https://datarade.ai" style="color:var(--glt)">Datarade</a> already lists Numerator and similar panel providers as AI training data sources. Sóró could be the first African panel listed there.</p>
+  </div>
+
+  <div class="card" style="border-color:rgba(204,149,68,.3)">
+    <div style="font-weight:700;font-size:.88rem;margin-bottom:.4rem;color:var(--glt)">Asset 2 — Conversational AI survey experience data</div>
+    <p style="margin:0;font-size:.85rem">Every AI-moderated interview Sóró runs produces something rarer than insight data: <strong>natural, contextual, human conversation turns between an AI interviewer and a real African person</strong>. This is high-quality dialogue data — with demographic metadata attached (age, school, state, interests). AI companies training conversational models, voice assistants, customer service bots, or any dialogue system targeting African users will pay premium for this. It's not just <em>what</em> people think — it's <em>how they talk</em>. Nigerian Pidgin, code-switching between English and Yoruba/Igbo/Hausa, informal speech patterns, cultural references. That linguistic texture is nearly impossible to collect at scale any other way. Sóró collects it automatically as a byproduct of the core product.</p>
+  </div>
+
+  <h3>When to build this</h3>
+  <div class="card" style="border-color:rgba(204,149,68,.3)">
+    <p style="margin:0"><strong>Not yet.</strong> The API is only worth building when the dataset has genuine depth — at minimum 100+ briefs across diverse topics and demographics. That's roughly a year of active brief-running at current pace. Store the data cleanly from day one (structured JSON, tagged by topic, category, demographic, university, date) so the API layer is easy to build on top when the time comes.</p>
+  </div>
+</section>
+
+<section class="section" id="scaling">
+  <div class="eyebrow">17 — Research-backed</div>
+  <h2>Scaling plays — what the data says</h2>
+
+  <p>Deep research into African market trends surfaces eight legitimate expansion plays beyond the core Nigeria student panel. Ranked by how naturally they extend from what Sóró already is.</p>
+
+  <h3>1. Expand demographics vertically — all verified young Africans</h3>
+  <p>African household spending in Sub-Saharan Africa has grown <strong>150% faster than the population</strong> over the past 20 years. Total household consumption is forecast to hit <strong>$2.5 trillion by 2030</strong>. Nigeria alone has ~52 million people in the consumer class. University students are the seed — but verified young professionals, recent graduates, and NYSC participants are the natural next ring. Same verification model, much larger addressable panel.</p>
+
+  <div class="card"><p style="margin:0;font-size:.85rem"><strong>Tactical move:</strong> After 10k verified students on panel, open a "Young Professionals" tier — 22–30 years old, verified by employment + NIN. Brands pay a premium for post-graduate earners vs. students.</p></div>
+
+  <h3>2. Pan-Africa expansion — Ghana, Kenya, South Africa first</h3>
+  <p>Nigeria is 28% of all African fintechs and commands 26% of the continent's e-commerce revenue. But Kenya, Ghana, and South Africa each have their own fintech ecosystems (1,200+ fintechs active across Africa by mid-2024), FMCG giants, and NGO presence. The panel model works identically. Cost to expand: mainly student recruitment in new markets via local TikTok/content strategy. Same platform, different phone number verification and local payout rails (M-Pesa for Kenya, etc.).</p>
+  <div class="stat-grid" style="grid-template-columns:repeat(3,1fr)">
+    <div class="stat"><div class="stat-n">Kenya</div><div class="stat-l">M-Pesa penetration, strong NGO sector, active fintech scene</div></div>
+    <div class="stat"><div class="stat-n">Ghana</div><div class="stat-l">English-speaking, growing fintech, proximity to Anglophone West Africa</div></div>
+    <div class="stat"><div class="stat-n">S. Africa</div><div class="stat-l">Highest consumer data spend on continent, enterprise budgets</div></div>
+  </div>
+
+  <h3>3. International clients — the real revenue multiplier</h3>
+  <p>Every multinational entering Africa needs consumer data and has no trusted African panel to buy from. Nigeria accounts for a disproportionate share of Africa's consumer class — Lagos and Johannesburg alone each have 8M+ consumer-class residents. The companies that want this data have USD budgets:</p>
+  <ul class="checklist">
+    <li><strong>FMCG multinationals</strong> (Kraft Foods, Johnson &amp; Johnson, Unilever global) ramping up Africa presence — pay $5k–$50k per custom research engagement</li>
+    <li><strong>Venture capital and private equity</strong> conducting due diligence on African consumer businesses — one-off high-value data pulls</li>
+    <li><strong>African Development Bank, World Bank, IFC</strong> — constantly funding youth employment and consumer studies, USD grants</li>
+    <li><strong>Global management consultants</strong> (McKinsey, BCG) publishing African consumer reports — would pay for proprietary panel access as a primary source</li>
+  </ul>
+
+  <h3>4. Syndicated reports — sell once, earn many times</h3>
+  <p>Instead of only custom briefs (one buyer per study), produce quarterly syndicated reports on specific topics — "State of Gen Z Finance in Nigeria Q1 2026", "Campus Consumer Trends Report", "Nigerian Youth and E-commerce 2026." These get produced once using your existing panel and sold to 20–50 buyers at ₦50k–₦200k each. Nigeria's FMCG sector is projected at <strong>$38 billion</strong> — every major player in that market is a potential syndicated report buyer.</p>
+  <div class="card" style="border-color:rgba(45,134,89,.3)">
+    <p style="margin:0;font-size:.85rem"><strong>Math:</strong> One syndicated report, produced for ₦500k in research costs, sold to 30 companies at ₦150k each = ₦4.5M revenue. 10× the economics of a single custom brief for the same underlying data.</p>
+  </div>
+
+  <h3>5. Brand tracking subscriptions</h3>
+  <p>Instead of one-off briefs, brands pay a monthly retainer to track their metrics on the panel continuously — brand awareness, NPS, product perception, category preference. This is Kantar's highest-margin product line. For Sóró: a fintech pays ₦200k/month to see their brand health score among students updated weekly. Locked-in recurring revenue, minimal incremental work once the tracking survey is templated.</p>
+
+  <h3>6. Recruit-as-a-service for African companies</h3>
+  <p>The verified panel of university students is also a talent pipeline. Nigerian companies hiring for entry-level roles, internships, and graduate programs spend significant money on campus recruitment. Sóró already has verified, engaged, academically-enrolled students. A "Recruit" product that lets companies post roles directly to relevant panel members is a zero-infrastructure revenue line — the panel does double duty as a job board. Charge ₦50–₦200k per placement or per campaign.</p>
+
+  <h3>7. White-label panel for research agencies</h3>
+  <p>Nigerian and pan-African research agencies (the ones currently running manual focus groups and expensive fieldwork) could license Sóró's panel and survey infrastructure under their own brand. They bring the client relationships and research expertise; Sóró provides the verified respondents and AI-moderated interview platform. Revenue share model — agency keeps 40%, Sóró keeps 60%. Instant distribution into the existing market research buyer ecosystem without building a sales team.</p>
+
+  <h3>8. Government and policy research</h3>
+  <p>African governments, state agencies, and electoral commissions need youth sentiment data — for policy design, public health campaigns, electoral research. This is a large, underserved, price-insensitive buyer category. INEC (Nigerian electoral commission), state ministries, NDDC — these institutions have budgets and no modern research infrastructure. One government contract could be worth ₦5–₦20M.</p>
+
+  <h3>9. Behavioral intelligence — the social graph layer</h3>
+  <p>This is the most premium data product on the roadmap, and the one no African research firm is anywhere close to building. The idea: with user consent, students optionally connect their Instagram and TikTok accounts to Sóró. What they follow, what they engage with, what content patterns define their digital behaviour — layered on top of their survey responses. Self-reported data (what surveys capture) combined with observed behavioural data (what social media reveals) is an entirely different category of consumer intelligence.</p>
+
+  <div class="quote">"A student says they prefer savings products. Their TikTok follows tell you they're obsessed with streetwear drops. That tension is exactly what a brand needs to know to reach them."</div>
+
+  <div class="card-row">
+    <div class="card">
+      <div style="font-weight:700;font-size:.85rem;margin-bottom:.4rem">What gets captured</div>
+      <ul class="checklist" style="margin:0">
+        <li>Instagram: accounts followed, content categories engaged with, brand interactions</li>
+        <li>TikTok: content categories, creator types, product discovery patterns, trending audio/format exposure</li>
+        <li>Cross-platform: what they say (surveys) vs. what they do (social) — the gap between these is where real insight lives</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div style="font-weight:700;font-size:.85rem;margin-bottom:.4rem">Who pays for this</div>
+      <ul class="checklist" style="margin:0">
+        <li>Brand strategists building Gen Z campaigns — need to know what culture students actually live in</li>
+        <li>Fintech growth teams — why do students open TikTok but not their savings app?</li>
+        <li>Media buyers — what platforms, creators, and formats reach this cohort organically</li>
+        <li>VC and private equity — real behavioral signals when evaluating consumer-facing businesses</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="border-color:rgba(204,149,68,.3)">
+    <div style="font-weight:700;font-size:.85rem;margin-bottom:.4rem;color:var(--glt)">⚠️ Build this carefully</div>
+    <p style="margin:0;font-size:.83rem;color:var(--muted)">This is the most legally sensitive product on the roadmap. Requires explicit, granular opt-in consent — not buried in terms. Students must understand exactly what is shared, what is anonymised, and what they earn for it. Get a data privacy lawyer to review the consent flow before building. NDPR (Nigeria Data Protection Regulation) compliance is non-negotiable. When done right, this is a $10M+ product. When done wrong, it kills the core business. <strong>Phase 4 minimum — after the panel has significant trust and a legal foundation is in place.</strong></p>
+  </div>
+
+  <h3>10. Sell conversational data to AI companies</h3>
+  <p>Every Sóró interview produces two things: consumer insights (what people think) and <strong>dialogue data</strong> (how people talk). The second is arguably worth more to a specific buyer category — AI labs and companies training conversational models for African markets.</p>
+  <p>The scarcity here is real. High-quality, naturally-occurring African conversational data — in Nigerian Pidgin, code-switched English/Yoruba/Igbo/Hausa, informal registers — barely exists in any training dataset. Most African AI training data is scraped web text, which is formal, biased toward English, and doesn't reflect how people actually speak. Sóró's interviews are:</p>
+  <ul class="checklist">
+    <li><strong>Contextual</strong> — real questions about real topics, not synthetic prompts</li>
+    <li><strong>Demographically tagged</strong> — age, university, state, gender attached to every conversation</li>
+    <li><strong>Linguistically rich</strong> — captures code-switching, Pidgin, slang, informal registers that scraped data misses</li>
+    <li><strong>Consented</strong> — students agree to data collection at sign-up, making it legally licenseable in ways scraped data isn't</li>
+  </ul>
+  <div class="card" style="border-color:rgba(204,149,68,.3)">
+    <p style="margin:0;font-size:.85rem"><strong>Buyers:</strong> African AI labs (InstaDeep, Lelapa AI, Masakhane), voice assistant companies targeting Nigeria (OPay, PalmPay building in-app voice), international AI companies expanding to Africa (Google, Meta both have African language programs), and any company training customer service or chatbot models for Nigerian users. License structure: flat annual fee per language/demographic slice, or per-token pricing for the raw conversational corpus.</p>
+  </div>
+  <div class="card">
+    <p style="margin:0;font-size:.85rem"><strong>Critical implementation note:</strong> Build consent language into the student signup flow from day one — "your anonymised conversation data may be used to improve AI systems." Don't retrofit this later. Clean consent = licenseable asset. Missing consent = worthless data legally.</p>
+  </div>
+
+  <div class="hr"></div>
+
+  <h3>The realistic $100M path</h3>
+  <table>
+    <tr><th>Revenue stream</th><th>Scale assumption</th><th>Potential annual</th></tr>
+    <tr><td>Custom briefs (local)</td><td>500/month at ₦250k avg</td><td class="gold">₦1.5B (~$1M)</td></tr>
+    <tr><td>Custom briefs (international)</td><td>50/month at $3k avg</td><td class="gold">$1.8M</td></tr>
+    <tr><td>Syndicated reports</td><td>20 reports × 40 buyers × $300</td><td class="gold">$2.4M</td></tr>
+    <tr><td>Brand tracking subscriptions</td><td>200 companies × $5k/year</td><td class="gold">$1M</td></tr>
+    <tr><td>Data API access</td><td>500 companies × $10k/year</td><td class="gold">$5M</td></tr>
+    <tr><td>Data licensing (bulk/AI training)</td><td>10 enterprise deals × $500k</td><td class="gold">$5M</td></tr>
+    <tr><td>Context connector (per-query AI billing)</td><td>50 AI platforms × avg $500/mo</td><td class="gold">$300k → scales with AI usage</td></tr>
+    <tr><td>Conversational data licensing (AI cos)</td><td>5 AI company deals × $200k/year</td><td class="gold">$1M</td></tr>
+    <tr><td>Recruitment-as-a-service</td><td>1,000 placements × $200</td><td class="gold">$200k</td></tr>
+    <tr><td>Self-serve tool (Phase 2)</td><td>5,000 paying teams × $30/mo</td><td class="gold">$1.8M</td></tr>
+    <tr><td><strong>Total at maturity</strong></td><td>5–7 year horizon, pan-Africa</td><td class="gold"><strong>~$19M ARR</strong></td></tr>
+  </table>
+  <p style="font-size:.8rem;margin-top:.5rem">The $100M outcome is valuation, not revenue. At $18M ARR with 60%+ margins and a proprietary pan-African consumer panel, Sóró is acquirable by Kantar, Nielsen, or a data infrastructure player for $100M–$500M — the panel's strategic value exceeds its revenue multiples. Numerator merged with Kantar's Worldpanel in 2025 in exactly this logic.</p>
+</section>
+
+<section class="section" id="nextsteps">
+  <div class="eyebrow">18</div>
+  <h2>Next steps</h2>
+  <ul class="checklist">
+    <li><strong>Immediate:</strong> Use the LinkedIn framework — 5 connection requests/day to fintech Heads of Product/Marketing</li>
+    <li><strong>Goal:</strong> One verbal "yes" from a company before building the full platform</li>
+    <li><strong>Build:</strong> Finish the gamified waitlist system on the existing landing pages</li>
+    <li><strong>Build:</strong> Full platform — student app → company dashboard → admin panel, in that order (prompts written separately)</li>
+    <li><strong>Critical from day one:</strong> Store all brief data in structured, tagged JSON (topic category, demographic, university, date, sentiment scores). This makes the Phase 3 API a simple build — not a rewrite — when the time comes.</li>
+    <li><strong>Hold:</strong> Phase 2 self-serve tool until first 3 paid briefs land</li>
+    <li><strong>Hold:</strong> Phase 3 data API until 100+ briefs completed and dataset has genuine depth</li>
+    <li><strong>Track early:</strong> First syndicated report opportunity appears around brief #20 — when you notice multiple companies asking similar questions, productise the overlap into a report.</li>
+  </ul>
+</section>
+
+</main>
+</div>
+
+<button class="onboard-fab" id="onboardFab" onclick="openOnboarding()">
+  🎓 <span>Onboarding<span class="fab-sub">context, gamified</span></span>
+</button>
+<div class="resume-pill" id="resumePill" onclick="openOnboarding()">↻ Resume onboarding</div>
+
+<div class="onboard-overlay" id="onboardOverlay" onclick="if(event.target===this)closeOnboarding()">
+  <div class="onboard-modal" id="onboardModal"></div>
+</div>
+
+<script>
+function toggleNav(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+// close mobile nav on link click
+document.querySelectorAll('.side-link').forEach(l => l.addEventListener('click', () => {
+  if(window.innerWidth <= 900){
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('show');
+  }
+}));
+// active link highlight on scroll
+const sections = document.querySelectorAll('.section');
+const links = document.querySelectorAll('.side-link');
+function onScroll(){
+  let cur = sections[0].id;
+  sections.forEach(sec => { if(window.scrollY >= sec.offsetTop - 120) cur = sec.id; });
+  links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#'+cur));
+}
+window.addEventListener('scroll', onScroll);
+onScroll();
+
+/* ============ ONBOARDING MODE ============ */
+const SORO_SECTIONS = {
+  overview: {
+    title: "The one-line pitch", eyebrow: "Start here",
+    blurb: "Sóró pays verified Nigerian university students to answer brand research questions through AI conversations — not boring forms. Brands get a structured report in 48 hours. That's the whole business in one sentence.",
+    quiz: { q:"What's the one-line pitch for Sóró?",
+      options:["A social media app for Nigerian students","Pays verified Nigerian university students to answer brand research questions through AI conversations","A student loan app","A job board for graduates"],
+      correct:1, explain:"Sóró is a paid, AI-moderated research panel — students answer questions, brands get reports in 48 hours." }
+  },
+  about: {
+    title:"What we do", eyebrow:"01",
+    blurb:"Traditional Nigerian market research is slow, expensive, and stale by the time it lands. Sóró is the AI-native consumer intelligence platform built for the speed of modern business — replacing legacy questionnaires with gamified experiences (AI conversations, swipe mechanics, mini-games) to capture Gen Z at their most authentic, then deliver executive-ready insights. Founded 2026.",
+    quiz:{ q:"What does Sóró replace legacy long-form surveys with?",
+      options:["Longer, more detailed PDF questionnaires","Phone call interviews only","Dynamic, gamified experiences — AI conversations, swipe mechanics, mini-games","Nothing — it just makes surveys shorter"],
+      correct:2, explain:"The whole bet is that gamified, native digital experiences get authentic answers where boring forms cause survey fatigue and rushed, broken answers." }
+  },
+  product: {
+    title:"Product & positioning", eyebrow:"02",
+    blurb:"Sóró is two products in one: a panel of verified Nigerian university students, and a B2B research service that sells access to that panel via AI-moderated interviews. What's actually sold isn't raw data or a dashboard — it's a research report, and companies pay upfront before any survey runs.",
+    quiz:{ q:"What is Sóró actually selling to brands?",
+      options:["Raw, unprocessed survey data","A self-serve dashboard subscription","A research report backed by verified respondents","Access to a social network"],
+      correct:2, explain:"Companies buy a finished research report (findings, demographics, verbatim quotes, CSV/PDF) — and they pay upfront, which removes Sóró's capital risk." }
+  },
+  team:{
+    title:"Who's who", eyebrow:"04",
+    blurb:"Ini (Inioluwa Ayodeji) is co-founder & CEO — works across product, sales, team, everything. Innex (Inioluwa Rotimi) is co-founder & CMO, runs growth and distribution. David is the new dev hire, working alongside Ini and Innex. Adeogo is community manager, owns community engagement and growth. Mahmud is admin — PA to the team, steps into other roles, and is also assistant community manager.",
+    quiz:{ q:"Who runs growth and distribution as CMO?",
+      options:["Ini (Inioluwa Ayodeji)","Innex (Inioluwa Rotimi)","David","Mahmud"],
+      correct:1, explain:"Innex is co-founder & CMO and owns growth and distribution. Ini is CEO and works across everything else." }
+  },
+  culture:{
+    title:"Vision & culture", eyebrow:"05",
+    blurb:"Long-term vision: building a global data and infrastructure company that helps shape how decisions are made worldwide. Culture: fun, fast-moving, built on individual freedom and autonomy — people are encouraged to do their own thing, even build their own startups alongside working here.",
+    quiz:{ q:"What's the long-term vision for Sóró?",
+      options:["Stay a Nigeria-only research shop indefinitely","A global data and infrastructure company shaping how decisions are made worldwide","A social media app for students","An ad agency for Gen Z brands"],
+      correct:1, explain:"The panel and reports are the starting wedge — the long-term bet is becoming global data/decision infrastructure." }
+  },
+  status:{
+    title:"What's actually live", eyebrow:"06",
+    blurb:"The waitlist is live and launched. The team is now actively reaching out to brands and companies. Still remaining: the full platform (student app, company dashboard, admin panel, API routes) — architecture and build prompts are already written for that.",
+    quiz:{ q:"What's the current status of the waitlist?",
+      options:["Still being built, not live yet","Live and launched — team is now actively reaching out to brands","Launched and then shut down","Only available to a private test group"],
+      correct:1, explain:"Waitlist is live. The focus now is active outbound to brands and companies while the full platform gets built." }
+  },
+  traction:{
+    title:"Early numbers", eyebrow:"07",
+    blurb:"Growing fast since the waitlist launched. Day 1 (Jul 6): 264 verified students, 375 community members. Current: 370+ verified students, 450+ community members — and the team is now actively reaching out to brands and companies.",
+    quiz:{ q:"What's the current traction number for verified students?",
+      options:["Around 100","264","370+","Over 1,000"],
+      correct:2, explain:"370+ verified students and 450+ community members currently — up from 264 on Day 1." }
+  },
+  pricing:{
+    title:"How the money works", eyebrow:"03",
+    blurb:"Two models: transactional (per-package, e.g. ₦250,000 for 100 students + 1 data track, with each extra track priced on a shrinking-but-still-profitable margin) and an enterprise USD retainer for bigger, recurring clients. Students earn ₦200+/question, up to ₦5,000 for premium studies.",
+    quiz:{ q:"How does price scale when a client adds more data tracks to a package?",
+      options:["Flat +₦100,000 every single track, no change","It increases per track, but the marginal add-on shrinks each time","Every extra track is free","Price goes down as more tracks are added, no floor"],
+      correct:1, explain:"Each extra track costs more in total but the marginal add-on price shrinks (e.g. +180k, then +150k, then +130k) — a volume discount that still stays above cost." }
+  },
+  market:{
+    title:"The opportunity", eyebrow:"08",
+    blurb:"Global market research is a $140B industry — Africa is under 2% of it despite being the fastest-growing consumer market on earth. Kantar ($3.4B revenue, 20,000 employees) is 'the model to beat': the panel IS the business, everything else flows through it. That's exactly the moat Sóró is building from day one.",
+    quiz:{ q:"Which company is described as 'the model to beat' — the structural blueprint Sóró is copying?",
+      options:["Google Forms","Kantar","GeoPoll","Craze"],
+      correct:1, explain:"Kantar's whole business flows through its consumer panel — that's the same structure Sóró is building, just AI-native and Africa-first." }
+  },
+  competition:{
+    title:"Why Sóró wins here", eyebrow:"09",
+    blurb:"On the comparison grid (verified African youth, AI conversations, affordable, 48hr turnaround), Sóró is the only player that checks all four boxes. Kantar/Nielsen and GeoPoll fail all of them for this segment; Craze (the closest US analog) is .edu-only and doesn't touch Africa.",
+    quiz:{ q:"What makes Sóró different from every other option on the competitive grid?",
+      options:["It's the only free option","It's the only one with verified African youth + AI conversations + affordable + fast turnaround — all four","It's been around the longest","It's the only global player"],
+      correct:1, explain:"Every competitor is missing at least one of the four things that matter — Sóró is the only one with all four for this market." }
+  },
+  gtm:{
+    title:"Getting first customers", eyebrow:"10",
+    blurb:"Sequence: Nigerian fintechs first (430+ companies fighting for the same Gen Z customer, fastest yes), then international orgs + FMCG in Year 1, then pan-Africa + subscriptions in Year 2-3. Cash flow advantage: companies pay before the survey runs, so Sóró never fronts a naira.",
+    quiz:{ q:"Why does Sóró have a strong cash-flow advantage?",
+      options:["It raised a large funding round","Companies pay upfront before the survey runs, so Sóró never fronts money","Students work for free","It receives a government subsidy"],
+      correct:1, explain:"The client funds the whole cycle — company pays first, Sóró pays students after. Near-zero capital needed to start." }
+  },
+  leads:{
+    title:"Who to reach out to", eyebrow:"11",
+    blurb:"Priority order: Nigerian fintechs first (Kuda, PalmPay, Moniepoint, etc.), then international orgs (UNICEF, USAID), then FMCG + agencies. Daily target: qualify 10 people/day, send a max of 5 connection requests/day.",
+    quiz:{ q:"What's the daily LinkedIn outreach target?",
+      options:["50 connection requests a day","5 connection requests/day, after qualifying 10 people","100 cold emails a day","One call a week"],
+      correct:1, explain:"Small and sustainable: qualify 10/day, send max 5 connection requests/day — about 25/week." }
+  },
+  templates:{
+    title:"How to actually message", eyebrow:"12",
+    blurb:"The connection request has one job: get accepted. Under 300 characters, one specific observation, no pitch, no ask. The first message (sent 2-3 days after acceptance) stays under 5 lines with exactly one ask — never request a call in message one.",
+    quiz:{ q:"What's the #1 rule for a LinkedIn connection request?",
+      options:["Mention the price upfront so there's no surprise","Keep it under 300 characters, one observation, no pitch or ask","Always ask for a call immediately","Send it in all caps to stand out"],
+      correct:1, explain:"The connection request's only job is getting accepted — no pitch, no ask, just a short specific observation." }
+  },
+  tools:{
+    title:"The stack", eyebrow:"13",
+    blurb:"For lead gen: start with Apollo (free tier) + Claude for message personalization + manual LinkedIn search — costs ₦0. For the platform: Next.js 14, Supabase, Claude API for AI interviews + report generation, Paystack for payments, money always stored in kobo.",
+    quiz:{ q:"What's the recommended way to start on lead-gen tooling, at ₦0 cost?",
+      options:["LinkedIn Sales Navigator + Clay","Apollo free tier + Claude for personalization + manual LinkedIn search","Instantly.ai + Lemlist","Hiring an outbound agency"],
+      correct:1, explain:"Apollo free + Claude + manual search gets you started at zero cost — upgrade tools once revenue justifies it." }
+  },
+  capital:{
+    title:"What it costs to start", eyebrow:"14",
+    blurb:"Total hard cash to start: under ₦20,000 — domain (₦8k/yr) plus free hosting and database. Companies fund the cycle, so Sóró never fronts student payouts. Build order: get one verbal commitment → build the minimum to run that one brief → charge upfront → deliver → use proof to land client #2.",
+    quiz:{ q:"How much hard cash does it take to start Sóró?",
+      options:["Over ₦2,000,000","About ₦500,000","Under ₦20,000","Nothing at all — completely free"],
+      correct:2, explain:"Domain + hosting only — under ₦20,000 total. Clients fund the actual operating cycle." }
+  },
+  phase2:{
+    title:"Phase 2 — self-serve tool (parked)", eyebrow:"15",
+    blurb:"Not a separate company — a funnel into Sóró's panel. Lets anyone build AI-conversational surveys distributed to their own audience. Pricing is modeled on Tally.so's freemium approach. Parked until Phase 1 (paid briefs) is proven — don't split focus across two unproven products.",
+    quiz:{ q:"What pricing model is Phase 2 (self-serve tool) borrowed from?",
+      options:["Typeform's enterprise pricing","Tally.so's freemium model","Kantar's panel subscription","SurveyMonkey Enterprise"],
+      correct:1, explain:"Tally.so — cheap/free tiers, bootstrapped positioning, wins by being the affordable serious option." }
+  },
+  phase3:{
+    title:"Phase 3 — the real unlock", eyebrow:"16",
+    blurb:"Every brief run grows a proprietary dataset of African youth consumer behaviour — searchable, queryable, sellable infinitely. That dataset, not any single brief, is described as 'the actual $100M unlock.' The API is just how access to it gets sold.",
+    quiz:{ q:"What's described as 'the actual $100M unlock' for Sóró?",
+      options:["Running more briefs per month","The proprietary dataset itself — the API is just how it's sold","Opening a new office","Hiring more developers"],
+      correct:1, explain:"The compounding dataset is the real asset. One insight generated once can be sold to many buyers." }
+  },
+  scaling:{
+    title:"Big future bets", eyebrow:"17",
+    blurb:"Multiple expansion plays are on the table — government/policy research, and the most premium one: a consent-based 'social graph layer' where students opt in to connect Instagram/TikTok, layering observed behaviour on top of survey answers. Explicitly flagged as needing a data-privacy lawyer and NDPR compliance before ever building it.",
+    quiz:{ q:"What's flagged as 'the most legally sensitive product on the roadmap'?",
+      options:["Government and policy research","The consent-based social graph / behavioral intelligence layer","Selling conversational data to AI companies","Syndicated reports"],
+      correct:1, explain:"The social-media-linked behavioral layer needs explicit consent, a privacy lawyer, and NDPR compliance — done wrong, it could kill the core business." }
+  },
+  nextsteps:{
+    title:"What's happening right now", eyebrow:"18",
+    blurb:"The live to-do list: 5 LinkedIn connection requests/day to fintech Heads of Product/Marketing, aiming for one verbal yes before building the full platform. Also finishing the gamified waitlist, and storing all brief data in structured JSON from day one so Phase 3's API is a simple build later, not a rewrite.",
+    quiz:{ q:"What's the single most immediate next step?",
+      options:["Raise a venture round","Build the Phase 3 data API","5 LinkedIn connection requests/day to fintech Heads of Product/Marketing","Launch in Ghana"],
+      correct:2, explain:"Everything else is downstream of landing that first verbal yes — the outreach motion comes first." }
+  }
+};
+
+const ONBOARD_TRACKS = {
+  general: { emoji:"🧭", name:"General / Everyone", desc:"The broad tour — what Sóró is, who's building it, and where it stands.",
+    steps:["overview","about","product","team","culture","status","traction","pricing","market","nextsteps"] },
+  engineering: { emoji:"🛠️", name:"Engineering", desc:"What's built, the stack, capital constraints, and what's next in line.",
+    steps:["overview","about","product","status","tools","capital","phase2","phase3","nextsteps"] },
+  growth: { emoji:"📣", name:"Growth & Content", desc:"Traction, the outreach motion, and the respondent pipeline.",
+    steps:["overview","about","product","traction","gtm","leads","templates","nextsteps"] },
+  sales: { emoji:"🤝", name:"Sales & Partnerships", desc:"Pricing, market size, competition, and how deals get won.",
+    steps:["overview","about","product","pricing","market","competition","gtm","templates","nextsteps"] }
+};
+
+const ONBOARD_KEY = "soro_onboard_v2";
+let ob = loadOb();
+let obPhase = "role"; // role | info | quiz | complete
+let obAttempts = 0;
+
+function loadOb(){
+  try{
+    const raw = localStorage.getItem(ONBOARD_KEY);
+    if(raw) return JSON.parse(raw);
+  }catch(e){}
+  return { role:null, stepIndex:0, xp:0, streak:0, bestStreak:0, correctFirstTry:0, missed:[], completed:false };
+}
+function saveOb(){ try{ localStorage.setItem(ONBOARD_KEY, JSON.stringify(ob)); }catch(e){} }
+function resetOb(){ ob = { role:null, stepIndex:0, xp:0, streak:0, bestStreak:0, correctFirstTry:0, missed:[], completed:false }; saveOb(); }
+
+function currentTrackSteps(){ return ob.role ? ONBOARD_TRACKS[ob.role].steps : []; }
+
+function checkResumePill(){
+  const pill = document.getElementById('resumePill');
+  const steps = currentTrackSteps();
+  if(ob.role && !ob.completed && steps.length){
+    pill.classList.add('show');
+    pill.textContent = `↻ Resume onboarding — step ${ob.stepIndex+1}/${steps.length}`;
+  } else {
+    pill.classList.remove('show');
+  }
+}
+
+function openOnboarding(){
+  document.getElementById('onboardOverlay').classList.add('show');
+  if(ob.role && !ob.completed){ obPhase = "info"; obAttempts = 0; renderOb(); }
+  else if(ob.completed){ obPhase = "complete"; renderOb(); }
+  else { obPhase = "role"; renderOb(); }
+}
+function closeOnboarding(){
+  document.getElementById('onboardOverlay').classList.remove('show');
+  checkResumePill();
+}
+
+function pickRole(roleKey){
+  ob.role = roleKey; ob.stepIndex = 0; ob.xp = 0; ob.streak = 0; ob.bestStreak = 0;
+  ob.correctFirstTry = 0; ob.missed = []; ob.completed = false;
+  saveOb();
+  obPhase = "info"; obAttempts = 0;
+  renderOb();
+}
+
+function jumpToSection(id){
+  closeOnboarding();
+  const el = document.getElementById(id);
+  if(el) el.scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+function renderOb(){
+  const modal = document.getElementById('onboardModal');
+  if(obPhase === "role"){
+    modal.innerHTML = `
+      <div class="onboard-body">
+        <div class="onboard-eyebrow">Onboarding</div>
+        <div class="onboard-title">What's your role?</div>
+        <p class="onboard-role-desc">Pick a track — each one is a short, gamified walk through exactly what you need. Quizzes check you actually absorbed it, not just scrolled past it.</p>
+        <div class="role-grid">
+          ${Object.entries(ONBOARD_TRACKS).map(([key,t])=>`
+            <button class="role-card" onclick="pickRole('${key}')">
+              <span class="r-emoji">${t.emoji}</span>
+              <div class="r-name">${t.name}</div>
+              <div class="r-desc">${t.desc}</div>
+              <div class="r-desc" style="margin-top:.4rem;color:var(--dim)">${t.steps.length} steps</div>
+            </button>
+          `).join('')}
+        </div>
+        <div class="onboard-footer" style="justify-content:flex-end;margin-top:1rem">
+          <button class="onboard-btn ghost" onclick="closeOnboarding()">Maybe later</button>
+        </div>
+      </div>`;
+    return;
+  }
+
+  const steps = currentTrackSteps();
+  const stepId = steps[ob.stepIndex];
+  const sec = SORO_SECTIONS[stepId];
+
+  if(obPhase === "complete"){
+    const total = steps.length;
+    const pct = Math.round((ob.correctFirstTry/total)*100);
+    let badge = "Good Start 📖";
+    if(pct>=90) badge = "Sóró Certified 🏅";
+    else if(pct>=70) badge = "Solid Grasp ✅";
+    else if(pct>=50) badge = "Getting There 🌱";
+    const missedList = ob.missed.length ? `
+      <div class="review-list">
+        <div class="rl-title">Worth a reread</div>
+        ${ob.missed.map(id=>`<div class="review-item"><span>${SORO_SECTIONS[id].title}</span><a href="#" onclick="jumpToSection('${id}');return false;">Jump to it →</a></div>`).join('')}
+      </div>` : `<p style="font-size:.85rem;color:var(--muted);margin-bottom:1.2rem">Clean sweep — nothing flagged for review.</p>`;
+    modal.innerHTML = `
+      <div class="onboard-body onboard-complete pop">
+        <div class="complete-emoji">🎉</div>
+        <div class="onboard-title" style="margin-bottom:.2rem">You're Sóró-onboarded!</div>
+        <div class="complete-badge">${badge}</div>
+        <div class="complete-stats">
+          <div class="stat"><div class="stat-n">${ob.xp}</div><div class="stat-l">XP earned</div></div>
+          <div class="stat"><div class="stat-n">${ob.correctFirstTry}/${total}</div><div class="stat-l">first-try correct</div></div>
+          <div class="stat"><div class="stat-n">🔥${ob.bestStreak}</div><div class="stat-l">best streak</div></div>
+        </div>
+        ${missedList}
+        <p style="font-size:.82rem;color:var(--muted);margin-bottom:1.2rem">You've now got the context most new hires need. Reach out to a founder for anything that genuinely isn't in here — not for stuff you skipped.</p>
+        <div class="onboard-footer" style="justify-content:center">
+          <button class="onboard-btn ghost" onclick="resetOb();obPhase='role';renderOb()">Try another track</button>
+          <button class="onboard-btn primary" onclick="closeOnboarding()">Done</button>
+        </div>
+      </div>`;
+    return;
+  }
+
+  const dots = steps.map((s,i)=>`<div class="onboard-dot ${i<ob.stepIndex?'done':(i===ob.stepIndex?'current':'')}"><i></i></div>`).join('');
+  const hearts = [0,1,2].map(i=>`<span class="${i<obAttempts?'lost':''}">❤️</span>`).join('');
+
+  const head = `
+    <div class="onboard-head">
+      <div class="onboard-head-row">
+        <div style="font-size:.78rem;color:var(--dim)">${ONBOARD_TRACKS[ob.role].emoji} ${ONBOARD_TRACKS[ob.role].name} · Step ${ob.stepIndex+1}/${steps.length}</div>
+        <button class="onboard-close" onclick="closeOnboarding()">✕</button>
+      </div>
+      <div class="onboard-dots">${dots}</div>
+      <div class="onboard-stats" style="margin-top:.6rem">
+        <span class="onboard-hearts">${hearts}</span>
+        <span class="onboard-xp">⚡ ${ob.xp} XP</span>
+        <span class="onboard-streak">🔥 ${ob.streak}</span>
+      </div>
+    </div>`;
+
+  if(obPhase === "info"){
+    modal.innerHTML = head + `
+      <div class="onboard-body pop">
+        <div class="onboard-eyebrow">${sec.eyebrow}</div>
+        <div class="onboard-title">${sec.title}</div>
+        <p class="onboard-blurb">${sec.blurb}</p>
+        <div class="onboard-footer">
+          <button class="onboard-btn primary" onclick="obPhase='quiz';obAttempts=0;renderOb()">Got it →</button>
+        </div>
+      </div>`;
+  } else if(obPhase === "quiz"){
+    modal.innerHTML = head + `
+      <div class="onboard-body pop">
+        <div class="onboard-eyebrow">Quick check</div>
+        <div class="onboard-q">${sec.quiz.q}</div>
+        <div class="onboard-options" id="obOptions">
+          ${sec.quiz.options.map((opt,i)=>`<button class="opt-btn" onclick="answerOb(${i})">${opt}</button>`).join('')}
+        </div>
+        <div id="obFeedback"></div>
+      </div>`;
+  }
+}
+
+function answerOb(i){
+  const steps = currentTrackSteps();
+  const stepId = steps[ob.stepIndex];
+  const sec = SORO_SECTIONS[stepId];
+  const buttons = document.querySelectorAll('#obOptions .opt-btn');
+  const correct = sec.quiz.correct;
+
+  if(i === correct){
+    buttons.forEach((b,idx)=>{ b.disabled = true; if(idx===i) b.classList.add('correct'); else b.classList.add('faded'); });
+    const xpGain = obAttempts === 0 ? 10 : 5;
+    ob.xp += xpGain;
+    if(obAttempts === 0){ ob.correctFirstTry++; ob.streak++; ob.bestStreak = Math.max(ob.bestStreak, ob.streak); }
+    else { ob.streak = 0; }
+    saveOb();
+    document.getElementById('obFeedback').innerHTML = `
+      <div class="onboard-feedback good pop">✅ Nice! +${xpGain} XP — ${sec.quiz.explain}</div>
+      <div class="onboard-footer"><button class="onboard-btn primary" onclick="advanceOb()">Continue →</button></div>`;
+  } else {
+    obAttempts++;
+    ob.streak = 0;
+    const btn = buttons[i];
+    btn.classList.add('incorrect','shake');
+    btn.disabled = true;
+    setTimeout(()=>btn.classList.remove('shake'), 350);
+    if(obAttempts >= 2){
+      buttons.forEach((b,idx)=>{ b.disabled = true; if(idx===correct) b.classList.add('correct'); else if(idx!==i) b.classList.add('faded'); });
+      if(!ob.missed.includes(stepId)) ob.missed.push(stepId);
+      saveOb();
+      document.getElementById('obFeedback').innerHTML = `
+        <div class="onboard-feedback bad pop">No worries — ${sec.quiz.explain}</div>
+        <div class="onboard-footer"><button class="onboard-btn primary" onclick="advanceOb()">Continue →</button></div>`;
+    } else {
+      if(!ob.missed.includes(stepId)) ob.missed.push(stepId);
+      saveOb();
+      document.getElementById('obFeedback').innerHTML = `<div class="onboard-feedback bad pop">Not quite — give it one more shot.</div>`;
+    }
+  }
+}
+
+function advanceOb(){
+  const steps = currentTrackSteps();
+  ob.stepIndex++;
+  saveOb();
+  if(ob.stepIndex >= steps.length){
+    ob.completed = true; saveOb();
+    obPhase = "complete";
+  } else {
+    obPhase = "info"; obAttempts = 0;
+  }
+  renderOb();
+}
+
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'Escape') closeOnboarding();
+});
+checkResumePill();
+</script>
+</body>
+</html>

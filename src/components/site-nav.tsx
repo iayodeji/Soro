@@ -1,16 +1,14 @@
 "use client"
 
 import Link from "next/link"
-import { SoroLogo } from "@/src/components/soro-logo"
+import Image from 'next/image';
+import logo from '@/public/soro-logo.webp'; // Ensure this file is accessible here
 
 type NavProps = {
-  /** label for the cross-link to the other audience */
   crossLinkLabel: string
   crossLinkHref: string
-  /** label + target id for the primary CTA that smooth-scrolls */
   ctaLabel: string
   ctaTargetId?: string
-  /** optional route for the primary CTA when it should navigate instead of scroll */
   ctaHref?: string
 }
 
@@ -23,11 +21,23 @@ export function SiteNav({ crossLinkLabel, crossLinkHref, ctaLabel, ctaTargetId, 
     const el = document.getElementById(ctaTargetId)
     el?.scrollIntoView({ behavior: "smooth", block: "start" })
   }
-
+  
   return (
     <header className="sticky top-0 z-50 border-b border-border/40 bg-background/50 backdrop-blur-md">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
-        <SoroLogo />
+        
+        {/* ⚡ OPTIMIZED LOGO: Uses next/image + priority to fix LCP bottleneck */}
+        <Link href="/" className="flex items-center">
+           <Image 
+             src={logo} 
+             alt="Sóró Logo" 
+             width={48} 
+             height={48} 
+             priority // Crucial: Tells the browser to download this asset first
+             className="h-8 w-auto" // Control size via CSS
+           />
+        </Link>
+
         <div className="flex items-center gap-2 sm:gap-4">
           <Link
             href={crossLinkHref}
