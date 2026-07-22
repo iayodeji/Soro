@@ -1,32 +1,48 @@
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import type { Metadata, Viewport } from "next"
-import { Playfair_Display, Inter } from "next/font/google"
 import "./globals.css"
-import { PostHogProvider } from "./posthog"
-import { AtmospherePointer  } from "@/src/components/atmosphere/atmosphere-pointer"
-import SoroBackground from '@/src/components/SoroBackground';
-
-const playfair = Playfair_Display({
-  variable: "--font-heading",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
-  display: 'swap', // This is non-negotiable for FCP
-  preload: true,   // Next.js will preload the font for you
-})
-
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap', // This is non-negotiable for FCP
-  preload: true,   // Next.js will preload the font for you
-  variable: "--font-sans",
-})
+import { PostHog } from "./posthog"
 
 export const metadata: Metadata = {
-  title: "Sóró — Get paid to share what you think",
+  metadataBase: new URL("https://getsoro.app"),
+  title: {
+    default: "Sóró | Nigerian Gen Z market research",
+    template: "%s | Sóró",
+  },
   description:
-    "Sóró is a verified Nigerian university student research panel. Students get paid to answer questions through AI conversations, and brands get honest insights in 48 hours.",
+    "Sóró gives brands fast, credible insight from verified Nigerian university students through AI-moderated conversations.",
+  keywords: [
+    "market research Nigeria",
+    "Gen Z research Nigeria",
+    "Nigerian consumer insights",
+    "Nigerian student panel",
+    "youth market research Africa",
+  ],
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_NG",
+    url: "/",
+    siteName: "Sóró",
+    title: "Sóró | Nigerian Gen Z market research",
+    description: "Fast, credible insight from verified Nigerian university students.",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Sóró — Nigerian Gen Z market research" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Sóró | Nigerian Gen Z market research",
+    description: "Fast, credible insight from verified Nigerian university students.",
+    images: ["/opengraph-image"],
+  },
+  icons: {
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    shortcut: [{ url: "/icon.svg", type: "image/svg+xml" }],
+  },
 }
+
 export const viewport: Viewport = {
   themeColor: "#FDFBF2",
 }
@@ -37,24 +53,18 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-  <html lang="en" className={`${playfair.variable} ${inter.variable} bg-background`}>
-    {/* Added 'relative isolation' to protect the z-index stacking context */}
-    <body className="font-sans antialiased relative isolation">
-      <PostHogProvider>
-        <AtmospherePointer />
-        <SoroBackground />      
-        <div className="relative z-10 w-full min-h-screen">
-          {children}
-        </div>
-        
-        {process.env.NODE_ENV === "production" && (
+    <html lang="en" className="bg-background">
+      <body className="min-h-dvh font-sans antialiased">
+        <PostHog />
+        {children}
+
+        {process.env.NODE_ENV === "production" ? (
           <>
             <Analytics />
             <SpeedInsights />
           </>
-        )}
-      </PostHogProvider>
-    </body>
-  </html>
-)
+        ) : null}
+      </body>
+    </html>
+  )
 }

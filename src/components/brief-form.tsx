@@ -1,114 +1,19 @@
-"use client"
-
-import { useState } from "react"
-import { createClient } from "@/src/lib/supabase/client"
-
-function isValidEmail(email: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-}
+import { submitBrief } from "@/src/app/actions"
 
 const COUNTS = ["50", "100", "200", "Custom"]
 const TIMELINES = ["ASAP", "Within a week", "Flexible"]
 
-type FormState = {
-  company: string
-  contact_name: string
-  email: string
-  title: string
-  question: string
-  target_profile: string
-  count: string
-  timeline: string
-}
-
-const EMPTY: FormState = {
-  company: "",
-  contact_name: "",
-  email: "",
-  title: "",
-  question: "",
-  target_profile: "",
-  count: "100",
-  timeline: "Within a week",
-}
-
 export function BriefForm() {
-  const [form, setForm] = useState<FormState>(EMPTY)
-  const [errors, setErrors] = useState<Record<string, string>>({})
-  const [loading, setLoading] = useState(false)
-  const [submitError, setSubmitError] = useState("")
-  const [done, setDone] = useState(false)
-
-  function update<K extends keyof FormState>(key: K, value: string) {
-    setForm((f) => ({ ...f, [key]: value }))
-  }
-
-  function validate() {
-    const next: Record<string, string> = {}
-    if (form.company.trim().length < 2) next.company = "Company name is required."
-    if (form.contact_name.trim().length < 2) next.contact_name = "Your name is required."
-    if (!form.email.trim()) next.email = "Work email is required."
-    else if (!isValidEmail(form.email)) next.email = "Enter a valid work email."
-    if (form.question.trim().length < 10) next.question = "Tell us a bit more about your research question."
-    if (form.target_profile.trim().length < 5) next.target_profile = "Describe your target respondents."
-    setErrors(next)
-    return Object.keys(next).length === 0
-  }
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    setSubmitError("")
-    if (!validate()) return
-
-    setLoading(true)
-    try {
-      const supabase = createClient()
-      const { error } = await supabase.from("brief_inquiries").insert({
-        company: form.company.trim(),
-        contact_name: form.contact_name.trim(),
-        email: form.email.trim().toLowerCase(),
-        title: form.title.trim() || null,
-        question: form.question.trim(),
-        target_profile: form.target_profile.trim(),
-        count: form.count,
-        timeline: form.timeline,
-      })
-      if (error) throw error
-      setDone(true)
-    } catch {
-      setSubmitError("We couldn't submit your brief just now. Please try again.")
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  if (done) {
-    return (
-      <div className="soro-pop rounded-2xl border border-sage/30 bg-sage/10 p-8 text-center">
-        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-sage text-sage-foreground">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-            <path d="M20 6 9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </div>
-        <h3 className="font-heading text-2xl font-bold text-foreground">Brief received</h3>
-        <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-muted-foreground">
-          Thanks, {form.contact_name.split(" ")[0] || "there"}. A Sóró research lead will email you within one business
-          day to confirm scope, pricing, and your upfront payment link. Once that&apos;s settled, we deploy your
-          interview and deliver insights within 48 hours.
-        </p>
-      </div>
-    )
-  }
-
   const inputBase =
-    "w-full rounded-lg border bg-background px-4 py-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-terracotta focus:ring-2 focus:ring-terracotta/20"
-
-  function Err({ name }: { name: string }) {
-    return errors[name] ? <p className="mt-1 text-xs font-medium text-terracotta">{errors[name]}</p> : null
-  }
+    "w-full rounded-lg border border-input bg-background px-4 py-3 text-base text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-terracotta focus:ring-2 focus:ring-terracotta/20 sm:text-sm"
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="space-y-5">
+    <form action={submitBrief} className="space-y-5">
+      <div className="sr-only" aria-hidden="true">
+        <label htmlFor="bf-website">Company website</label>
+        <input id="bf-website" name="company_website" tabIndex={-1} autoComplete="off" />
+      </div>
+
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="bf-company" className="mb-1.5 block text-sm font-medium text-foreground">
@@ -116,12 +21,14 @@ export function BriefForm() {
           </label>
           <input
             id="bf-company"
-            value={form.company}
-            onChange={(e) => update("company", e.target.value)}
+            name="company"
+            required
+            minLength={2}
+            maxLength={160}
+            autoComplete="organization"
             placeholder="Acme Fintech"
-            className={`${inputBase} ${errors.company ? "border-terracotta" : "border-input"}`}
+            className={inputBase}
           />
-          <Err name="company" />
         </div>
         <div>
           <label htmlFor="bf-contact" className="mb-1.5 block text-sm font-medium text-foreground">
@@ -129,12 +36,14 @@ export function BriefForm() {
           </label>
           <input
             id="bf-contact"
-            value={form.contact_name}
-            onChange={(e) => update("contact_name", e.target.value)}
+            name="contact_name"
+            required
+            minLength={2}
+            maxLength={120}
+            autoComplete="name"
             placeholder="Ada Obi"
-            className={`${inputBase} ${errors.contact_name ? "border-terracotta" : "border-input"}`}
+            className={inputBase}
           />
-          <Err name="contact_name" />
         </div>
         <div>
           <label htmlFor="bf-email" className="mb-1.5 block text-sm font-medium text-foreground">
@@ -142,13 +51,15 @@ export function BriefForm() {
           </label>
           <input
             id="bf-email"
+            name="email"
             type="email"
-            value={form.email}
-            onChange={(e) => update("email", e.target.value)}
+            required
+            maxLength={254}
+            autoComplete="email"
+            inputMode="email"
             placeholder="ada@acme.com"
-            className={`${inputBase} ${errors.email ? "border-terracotta" : "border-input"}`}
+            className={inputBase}
           />
-          <Err name="email" />
         </div>
         <div>
           <label htmlFor="bf-title" className="mb-1.5 block text-sm font-medium text-foreground">
@@ -156,10 +67,11 @@ export function BriefForm() {
           </label>
           <input
             id="bf-title"
-            value={form.title}
-            onChange={(e) => update("title", e.target.value)}
+            name="title"
+            maxLength={160}
+            autoComplete="organization-title"
             placeholder="Head of Insights"
-            className={`${inputBase} border-input`}
+            className={inputBase}
           />
         </div>
       </div>
@@ -170,13 +82,14 @@ export function BriefForm() {
         </label>
         <textarea
           id="bf-question"
+          name="question"
           rows={3}
-          value={form.question}
-          onChange={(e) => update("question", e.target.value)}
+          required
+          minLength={10}
+          maxLength={4000}
           placeholder="What we want to learn — e.g. why students abandon our wallet during onboarding."
-          className={`${inputBase} resize-y ${errors.question ? "border-terracotta" : "border-input"}`}
+          className={inputBase + " resize-y"}
         />
-        <Err name="question" />
       </div>
 
       <div>
@@ -185,13 +98,14 @@ export function BriefForm() {
         </label>
         <textarea
           id="bf-target"
+          name="target_profile"
           rows={2}
-          value={form.target_profile}
-          onChange={(e) => update("target_profile", e.target.value)}
+          required
+          minLength={5}
+          maxLength={2000}
           placeholder="e.g. female students, Ibadan, 18–22, fintech users"
-          className={`${inputBase} resize-y ${errors.target_profile ? "border-terracotta" : "border-input"}`}
+          className={inputBase + " resize-y"}
         />
-        <Err name="target_profile" />
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
@@ -199,15 +113,10 @@ export function BriefForm() {
           <label htmlFor="bf-count" className="mb-1.5 block text-sm font-medium text-foreground">
             Desired respondent count
           </label>
-          <select
-            id="bf-count"
-            value={form.count}
-            onChange={(e) => update("count", e.target.value)}
-            className={`${inputBase} border-input`}
-          >
-            {COUNTS.map((c) => (
-              <option key={c} value={c}>
-                {c === "Custom" ? "Custom" : `${c} respondents`}
+          <select id="bf-count" name="count" defaultValue="100" className={inputBase}>
+            {COUNTS.map((count) => (
+              <option key={count} value={count}>
+                {count === "Custom" ? "Custom" : count + " respondents"}
               </option>
             ))}
           </select>
@@ -216,15 +125,10 @@ export function BriefForm() {
           <label htmlFor="bf-timeline" className="mb-1.5 block text-sm font-medium text-foreground">
             Timeline
           </label>
-          <select
-            id="bf-timeline"
-            value={form.timeline}
-            onChange={(e) => update("timeline", e.target.value)}
-            className={`${inputBase} border-input`}
-          >
-            {TIMELINES.map((t) => (
-              <option key={t} value={t}>
-                {t}
+          <select id="bf-timeline" name="timeline" defaultValue="Within a week" className={inputBase}>
+            {TIMELINES.map((timeline) => (
+              <option key={timeline} value={timeline}>
+                {timeline}
               </option>
             ))}
           </select>
@@ -233,13 +137,10 @@ export function BriefForm() {
 
       <button
         type="submit"
-        disabled={loading}
-        className="inline-flex w-full items-center justify-center rounded-lg bg-terracotta px-6 py-3.5 text-sm font-semibold text-terracotta-foreground transition-colors hover:bg-terracotta/90 disabled:opacity-60"
+        className="inline-flex min-h-12 w-full items-center justify-center rounded-lg bg-terracotta px-6 py-3.5 text-sm font-semibold text-terracotta-foreground transition-colors hover:bg-terracotta/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracotta"
       >
-        {loading ? "Submitting brief…" : "Submit a brief"}
+        Submit a brief
       </button>
-
-      {submitError ? <p className="text-sm font-medium text-terracotta">{submitError}</p> : null}
     </form>
   )
 }

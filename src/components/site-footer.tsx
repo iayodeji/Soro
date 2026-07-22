@@ -1,4 +1,3 @@
-import Link from "next/link"
 import { SoroLogo } from "@/src/components/soro-logo"
 
 type FooterProps = {
@@ -21,16 +20,22 @@ export function SiteFooter({ crossLinkLabel, crossLinkHref, primaryCtaLabel, pri
         </div>
         <div className="flex flex-col gap-3 text-sm sm:flex-row sm:items-center sm:gap-6">
           {primaryCtaLabel && primaryCtaHref ? (
-            <Link
+            <a
               href={primaryCtaHref}
               className="inline-flex items-center justify-center rounded-full bg-terracotta px-4 py-2 font-semibold text-terracotta-foreground transition-colors hover:bg-terracotta/90"
             >
               {primaryCtaLabel}
-            </Link>
+            </a>
           ) : null}
-          <Link href={crossLinkHref} className="font-medium text-foreground transition-colors hover:text-terracotta">
+          <a href={crossLinkHref} className="font-medium text-foreground transition-colors hover:text-terracotta">
             {crossLinkLabel}
-          </Link>
+          </a>
+          <a href="/gen-z-research-nigeria" className="font-medium text-foreground transition-colors hover:text-terracotta">
+            Gen Z research
+          </a>
+          <a href="/brand-research-nigeria" className="font-medium text-foreground transition-colors hover:text-terracotta">
+            Brand research
+          </a>
           {contactEmail ? (
             <a
               href={`mailto:${contactEmail}`}

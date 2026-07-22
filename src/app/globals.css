@@ -1,10 +1,9 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
+@import "tailwindcss";
 
 @theme inline {
-  --font-heading: var(--font-heading), 'Georgia', serif;
-  --font-sans: var(--font-sans), 'Inter Fallback', system-ui, sans-serif;
-  --font-mono: var(--font-mono), monospace;
+  --font-heading: var(--font-display);
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-code);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -40,49 +39,65 @@
 :root {
   color-scheme: light;
   --radius: 0.75rem;
+  --font-display: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --font-body: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-code: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 
-  /* Brand background — soft off-white / cream */
   --background: #fdfbf2;
-  /* Deep charcoal black */
   --foreground: #1f1612;
-
   --card: #fffdf6;
   --card-foreground: #1f1612;
-
   --muted: #f1ecdc;
-  --muted-foreground: #6c6358;
-
+  --muted-foreground: #62594f;
   --border: #e6dfcc;
-  --input: #e6dfcc;
+  --input: #dcd3bc;
   --ring: #b74a26;
-
-  /* Primary accent — terracotta / burnt orange */
   --terracotta: #b74a26;
-  --terracotta-foreground: #fdfbf2;
-  /* Secondary accent — ochre / warm mustard */
-  --ochre: #cfa331;
+  --terracotta-foreground: #fffdf6;
+  --ochre: #b98616;
   --ochre-foreground: #1f1612;
-  /* Tertiary accent — muted sage green */
-  --sage: #7a8452;
-  --sage-foreground: #fdfbf2;
-
-  /* Atmosphere cursor offset — updated by <AtmospherePointer />.
-     Defaults to 0px, so the atmosphere works fine with no JS mounted. */
-  --mx: 0px;
-  --my: 0px;
+  --sage: #667542;
+  --sage-foreground: #fffdf6;
 }
 
 @layer base {
   * {
     @apply border-border;
   }
-  body {
-    @apply bg-transparent text-foreground;
-    position: relative;
-  }
+
   html {
     @apply font-sans;
     scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    background-image:
+      radial-gradient(70rem 42rem at 110% -15%, rgb(207 163 49 / 16%), transparent 66%),
+      radial-gradient(56rem 38rem at -20% 78%, rgb(122 132 82 / 11%), transparent 67%),
+      radial-gradient(48rem 32rem at 92% 102%, rgb(183 74 38 / 9%), transparent 70%);
+    min-width: 320px;
+  }
+
+  a,
+  button,
+  input,
+  select,
+  textarea {
+    touch-action: manipulation;
+  }
+
+  ::selection {
+    background: rgb(183 74 38 / 22%);
+    color: var(--foreground);
+  }
+}
+
+@media (max-width: 640px) {
+  body {
+    background-image:
+      radial-gradient(46rem 28rem at 110% -10%, rgb(207 163 49 / 13%), transparent 65%),
+      radial-gradient(40rem 30rem at -30% 82%, rgb(122 132 82 / 8%), transparent 68%);
   }
 }
 
@@ -90,220 +105,13 @@
   html {
     scroll-behavior: auto;
   }
+
   *,
   *::before,
   *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
     transition-duration: 0.001ms !important;
   }
-}
-
-/* ============================================================
-   Ambient atmosphere — drifting gradient fields + film grain,
-   sitting behind everything via body::before / body::after.
-   Colors and motion are pure CSS. --mx/--my are optionally fed
-   by <AtmospherePointer /> for cursor reactivity; they default
-   to 0px so this works with zero JS mounted.
-   ============================================================ */
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  pointer-events: none;
-  background-repeat: no-repeat;
-  background-image:
-    radial-gradient(circle, rgba(183, 74, 38, 0.16), transparent 70%),
-    radial-gradient(circle, rgba(207, 163, 49, 0.14), transparent 70%),
-    radial-gradient(circle, rgba(122, 132, 82, 0.13), transparent 70%);
-  background-size: 60vw 60vw, 42vw 42vw, 32vw 32vw;
-  background-position:
-    calc(-14% + var(--mx) * 1) calc(-16% + var(--my) * 1),
-    calc(110% + var(--mx) * -1.4) calc(24% + var(--my) * 0.8),
-    calc(34% + var(--mx) * 0.6) calc(112% + var(--my) * -1.2);
-  filter: blur(60px);
-  animation: atmosphere-drift 42s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-  transition: background-position 0.1s linear;
-}
-
-@keyframes atmosphere-drift {
-  0% {
-    background-position:
-      calc(-14% + var(--mx) * 1) calc(-16% + var(--my) * 1),
-      calc(110% + var(--mx) * -1.4) calc(24% + var(--my) * 0.8),
-      calc(34% + var(--mx) * 0.6) calc(112% + var(--my) * -1.2);
-  }
-  33% {
-    background-position:
-      calc(-6% + var(--mx) * 1) calc(-6% + var(--my) * 1),
-      calc(96% + var(--mx) * -1.4) calc(32% + var(--my) * 0.8),
-      calc(40% + var(--mx) * 0.6) calc(98% + var(--my) * -1.2);
-  }
-  66% {
-    background-position:
-      calc(-18% + var(--mx) * 1) calc(-4% + var(--my) * 1),
-      calc(104% + var(--mx) * -1.4) calc(14% + var(--my) * 0.8),
-      calc(28% + var(--mx) * 0.6) calc(106% + var(--my) * -1.2);
-  }
-  100% {
-    background-position:
-      calc(-14% + var(--mx) * 1) calc(-16% + var(--my) * 1),
-      calc(110% + var(--mx) * -1.4) calc(24% + var(--my) * 0.8),
-      calc(34% + var(--mx) * 0.6) calc(112% + var(--my) * -1.2);
-  }
-}
-
-body::after {
-  content: "";
-  position: fixed;
-  inset: -200px;
-  z-index: -1;
-  pointer-events: none;
-  opacity: 0.045;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 140px 140px;
-  animation: grain-shift 0.6s steps(6) infinite;
-}
-
-@keyframes grain-shift {
-  0% { transform: translate(0, 0); }
-  16% { transform: translate(-9%, 6%); }
-  32% { transform: translate(6%, -11%); }
-  48% { transform: translate(-4%, 10%); }
-  64% { transform: translate(11%, 4%); }
-  80% { transform: translate(-7%, -6%); }
-  100% { transform: translate(0, 0); }
-}
-
-.soro-backdrop-video {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -3;
-  opacity: 0.15;
-  pointer-events: none;
-  filter: blur(40px) saturate(1.2);
-}
-
-/* Activity ticker + chat marquee */
-@keyframes soro-ticker {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.soro-ticker-track {
-  animation: soro-ticker 40s linear infinite;
-}
-.soro-ticker:hover .soro-ticker-track {
-  animation-play-state: paused;
-}
-
-@keyframes soro-waveform {
-  0%, 100% { height: 35%; opacity: 0.5; }
-  50% { height: 100%; opacity: 1; }
-}
-
-.soro-waveform-bar {
-  animation: soro-waveform 0.8s ease-in-out infinite;
-}
-
-@keyframes soro-blink {
-  0%,
-  100% {
-    opacity: 0.2;
-    transform: translateY(0);
-  }
-  50% {
-    opacity: 1;
-    transform: translateY(-2px);
-  }
-}
-
-.soro-dot {
-  animation: soro-blink 1.2s infinite ease-in-out;
-}
-
-@keyframes soro-pop-in {
-  from {
-    opacity: 0;
-    transform: translateY(8px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-.soro-pop {
-  animation: soro-pop-in 0.35s ease-out both;
-}
-
-@keyframes soro-float-up {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.soro-float {
-  animation: soro-float-up 0.4s ease-out both;
-}
-
-/* Sóró Reward Card Physics */
-@keyframes cardInertialPop {
-  0% {
-    opacity: 0;
-    transform: scale(0.6) translateY(60px) rotateX(-20deg);
-  }
-  70% {
-    transform: scale(1.04) translateY(-4px) rotateX(2deg);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) translateY(0) rotateX(0deg);
-  }
-}
-
-@keyframes scaleInCheck {
-  0% {
-    transform: scale(0) rotate(-45deg);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1) rotate(0deg);
-    opacity: 1;
-  }
-}
-
-@keyframes fadeInUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-.soro-backdrop-video {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -3;
-  
-  /* 🎛️ CRANK THESE UP: */
-  opacity: 0.55;                 /* Try 0.65 (65%) or even 0.85 to make it punchy */
-  filter: blur(15px) saturate(1.4); /* Reduced the blur from 40px to 15px so you see the shapes/motion */
-  
-  pointer-events: none;
 }
